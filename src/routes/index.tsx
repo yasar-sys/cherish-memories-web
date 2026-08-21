@@ -38,14 +38,14 @@ export const Route = createFileRoute("/")({
 });
 
 const MEMORIES = [
-  { src: m1.url, caption: "পাহাড়ের ধারে সেই বিকেল", note: "তোমার চোখে পুরো উপত্যকা।", tilt: "-2deg" },
-  { src: m2.url, caption: "নদীর জলে পা ভিজিয়ে", note: "হাসিটা আজও কানে বাজে।", tilt: "3deg" },
-  { src: m3.url, caption: "নৌকার পাটাতনে গল্প", note: "সময় থেমে গিয়েছিল।", tilt: "-1deg" },
-  { src: m4.url, caption: "রাতের আলো-আঁধারি", note: "শুধু তুমি আর আমি।", tilt: "2deg" },
-  { src: m5.url, caption: "ক্যাফের সেই টেবিল", note: "কফির চেয়ে তুমি বেশি গরম ছিলে।", tilt: "-3deg" },
-  { src: m6.url, caption: "ঘরের কোণে অলস দুপুর", note: "এই মুহূর্তগুলোই আসল।", tilt: "1deg" },
-  { src: m7.url, caption: "পার্কের ঘাসে বসে", note: "বাতাসে তোমার চুল।", tilt: "-2deg" },
-  { src: m8.url, caption: "little moments, big memories", note: "you + me = ♥", tilt: "3deg" },
+  { src: m1.url, caption: "little moments, big memories", note: "you + me = ♥", tilt: "-2deg" },
+  { src: m2.url, caption: "পার্কের ঘাসে বসে", note: "বাতাসে তোমার চুল।", tilt: "3deg" },
+  { src: m3.url, caption: "ঘরের কোণে অলস দুপুর", note: "এই মুহূর্তগুলোই আসল।", tilt: "-1deg" },
+  { src: m4.url, caption: "ক্যাফের সেই টেবিল", note: "কফির চেয়ে তুমি বেশি উষ্ণ।", tilt: "2deg" },
+  { src: m5.url, caption: "রাতের আলো-আঁধারি", note: "শুধু তুমি আর আমি।", tilt: "-3deg" },
+  { src: m6.url, caption: "নৌকার পাটাতনে গল্প", note: "সময় থেমে গিয়েছিল।", tilt: "1deg" },
+  { src: m7.url, caption: "পাহাড়ের ধারে সেই বিকেল", note: "তোমার চোখে পুরো উপত্যকা।", tilt: "-2deg" },
+  { src: m8.url, caption: "নদীর জলে পা ভিজিয়ে", note: "হাসিটা আজও কানে বাজে।", tilt: "3deg" },
   { src: m9.url, caption: "দুষ্টুমির সেই দিনটা", note: "তোমার ওই মুখটা ভুলব না।", tilt: "-1deg" },
 ];
 
