@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Heart, Camera, BookOpen, Send, Calendar, Star, ChevronDown, Music, Disc } from "lucide-react";
+import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
@@ -64,11 +64,6 @@ const NOTES = [
   },
 ];
 
-const INITIAL_WISHES = [
-  { name: "প্রিয়তম", text: "শুভ জন্মদিন রাজকন্যা! সারা জীবন এমন মিষ্টি হাসিতে থেকো।", time: "রাত ১২:০০" },
-  { name: "তোমার ভক্ত", text: "আজকের দিনটি তোমার মতোই সুন্দর ও আনন্দময় হোক! ♥", time: "রাত ১২:০১" },
-];
-
 function BirthdayPage() {
   const [opened, setOpened] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
@@ -76,23 +71,7 @@ function BirthdayPage() {
   const [dodge, setDodge] = useState(0);
   const [filter, setFilter] = useState("all");
 
-  // Wish Book State
-  const [wishes, setWishes] = useState(INITIAL_WISHES);
-  const [newWishName, setNewWishName] = useState("");
-  const [newWishText, setNewWishText] = useState("");
-
   const filteredMemories = filter === "all" ? MEMORIES : MEMORIES.filter((m) => m.cat === filter);
-
-  const handleAddWish = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newWishText.trim()) return;
-    const name = newWishName.trim() || "শুভানুধ্যায়ী";
-    const now = new Date();
-    const timeStr = `${now.getHours()}:${now.getMinutes() < 10 ? "0" : ""}${now.getMinutes()}`;
-    setWishes([{ name, text: newWishText.trim(), time: timeStr }, ...wishes]);
-    setNewWishText("");
-    setNewWishName("");
-  };
 
   if (!opened) {
     return (
@@ -372,72 +351,6 @@ function BirthdayPage() {
           <p className="mt-8 border-t border-rose-deep/10 pt-6 text-xs text-rose-deep/50 italic">
             *হ্যাঁ বললে কিন্তু সময়মতো একদম তৈরি থেকো!
           </p>
-        </div>
-      </section>
-
-      {/* Interactive Birthday Wish Book */}
-      <section className="relative z-10 bg-rose-deep/5 py-24 border-t border-gold/20">
-        <div className="mx-auto max-w-3xl px-6">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
-              <Star className="h-5 w-5 text-gold fill-gold" />
-              <span>জন্মদিনের শুভেচ্ছাবার্তা</span>
-            </div>
-            <h2 className="font-display text-4xl font-bold text-rose-deep">
-              ভালোবাসার খাতা
-            </h2>
-            <p className="mt-2 text-rose-deep/70 text-sm">
-              এখানে তোমার সুন্দর জন্মদিনের শুভকামনাটি লিখে রেখে যাও।
-            </p>
-          </div>
-
-          {/* Input Form */}
-          <form onSubmit={handleAddWish} className="scrapbook-shadow glass-card rounded-2xl p-6 mb-10 border border-gold/30">
-            <div className="flex flex-col gap-4 sm:flex-row mb-4">
-              <input
-                type="text"
-                placeholder="তোমার নাম (ঐচ্ছিক)"
-                value={newWishName}
-                onChange={(e) => setNewWishName(e.target.value)}
-                className="w-full sm:w-1/3 rounded-xl border border-rose-deep/20 bg-background/80 px-4 py-3 text-sm text-rose-deep focus:border-rose-deep focus:outline-none"
-              />
-              <input
-                type="text"
-                placeholder="জন্মদিনের মিষ্টি বার্তাটি লেখো..."
-                value={newWishText}
-                onChange={(e) => setNewWishText(e.target.value)}
-                className="w-full sm:w-2/3 rounded-xl border border-rose-deep/20 bg-background/80 px-4 py-3 text-sm text-rose-deep focus:border-rose-deep focus:outline-none"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full sm:w-auto ml-auto flex items-center justify-center gap-2 rounded-xl bg-rose-deep px-6 py-3 text-xs font-bold text-cream shadow-md transition-transform hover:scale-105 active:scale-95"
-            >
-              <span>বার্তা পাঠাও</span>
-              <Send className="h-3.5 w-3.5" />
-            </button>
-          </form>
-
-          {/* Wishes List */}
-          <div className="space-y-4">
-            {wishes.map((w, idx) => (
-              <div
-                key={idx}
-                className="glass-card flex items-start gap-4 rounded-2xl p-5 border border-gold/20 shadow-sm"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-deep/10 text-rose-deep font-bold font-accent text-lg">
-                  ♥
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-display font-bold text-rose-deep text-sm">{w.name}</span>
-                    <span className="text-[10px] text-rose-deep/50">{w.time}</span>
-                  </div>
-                  <p className="mt-1 text-sm text-rose-deep/80 font-medium">{w.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
