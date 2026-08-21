@@ -616,7 +616,7 @@ function BirthdayPage() {
                   className="scrapbook-shadow group relative rounded-full bg-gradient-to-r from-rose-deep via-rose-mid to-rose-deep px-10 py-4 font-bold text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 min-w-[180px]"
                 >
                   <span className="flex items-center justify-center gap-2">
-                    এক্সাম <Heart className="h-4 w-4 fill-primary-foreground" />
+                    হ্যাঁ অবশ্যই কিন্তু আজ এখানে চাপ দিলে error দেখাবে কারণ এক্সাম <Heart className="h-4 w-4 fill-primary-foreground" />
                   </span>
                 </button>
 
@@ -628,12 +628,12 @@ function BirthdayPage() {
                     transform: `translate(${(dodge % 2 ? 1 : -1) * Math.min(dodge * 24, 110)}px, ${Math.min(dodge * 8, 45)}px)`,
                   }}
                 >
-                  {dodge > 2 ? "ধরতে পারছ না তো!" : "না, কাজ আছে"}
+                  {dodge > 2 ? "ধরতে পারছ না তো!" : "হ্যাঁ বলতে পারবা না নাও বলতে পারবে না"}
                 </button>
               </div>
 
               <p className="mt-8 border-t border-rose-deep/10 pt-6 text-xs text-rose-deep/50 italic">
-                *হ্যাঁ বললে ময়মনসিংহের সেরা জায়গাগুলো থেকে তোমার পছন্দের প্লেস ও টাইম বেছে নিতে পারবে!
+                তাই নিচে যাও এবং যেই ভিডিও দিছি সেই ভিডিও দেখো।     ধন্যবাদ আবার আসবেন।
               </p>
             </div>
           )}
