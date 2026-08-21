@@ -8,16 +8,6 @@ import { MusicPlayer } from "@/components/MusicPlayer";
 import { Petals } from "@/components/Petals";
 import { Lightbox } from "@/components/Lightbox";
 
-import m1 from "@/assets/memory-1.jpg.asset.json";
-import m2 from "@/assets/memory-2.jpg.asset.json";
-import m3 from "@/assets/memory-3.jpg.asset.json";
-import m4 from "@/assets/memory-4.jpg.asset.json";
-import m5 from "@/assets/memory-5.jpg.asset.json";
-import m6 from "@/assets/memory-6.jpg.asset.json";
-import m7 from "@/assets/memory-7.jpg.asset.json";
-import m8 from "@/assets/memory-8.jpg.asset.json";
-import m9 from "@/assets/memory-9.jpg.asset.json";
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -40,15 +30,15 @@ export const Route = createFileRoute("/")({
 });
 
 const MEMORIES = [
-  { src: m1.url, caption: "প্রথম দেখার মিষ্টি দিন", note: "যেদিন প্রথম তোমার চোখের দিকে তাকিয়েছিলাম", tilt: "-2.5deg", cat: "sweets" },
-  { src: m2.url, caption: "হাসির সেই ঝিলিক", note: "তোমার হাসিটা আমার সবচেয়ে প্রিয় দৃশ্য", tilt: "3deg", cat: "smiles" },
-  { src: m3.url, caption: "এক সাথে কিছুটা সময়", note: "বিকেলের হালকা হাওয়ায় পাশাপাশি হাঁটা", tilt: "-1.5deg", cat: "travel" },
-  { src: m4.url, caption: "আড্ডার গল্পগুলো", note: "চা এর কাপে ঘণ্টার পর ঘণ্টা গল্প", tilt: "2.5deg", cat: "sweets" },
-  { src: m5.url, caption: "বৃষ্টির সেই বিকাল", note: "একই ছাতার নিচে বৃষ্টির শব্দ শোনা", tilt: "-3deg", cat: "travel" },
-  { src: m6.url, caption: "খুশির বাঁধভাঙা মুহূর্ত", note: "তোমার সেই অকারণ খুশির চিৎকার", tilt: "1.8deg", cat: "smiles" },
-  { src: m7.url, caption: "অভিমানের পর মিল", note: "রাগ ভাঙানোর পর তোমার অভিমানী চোখ", tilt: "-2deg", cat: "sweets" },
-  { src: m8.url, caption: "সন্ধ্যার লাল আলো", note: "সূর্যাস্তের সাথে তোমার রূপের দ্যুতি", tilt: "3.2deg", cat: "travel" },
-  { src: m9.url, caption: "চিরদিনের একসাথে থাকা", note: "হাতে হাত রেখে অনাগত ভবিষ্যতের স্বপ্নে", tilt: "-1.2deg", cat: "smiles" },
+  { src: "/memories/memory-1.jpg", caption: "পাহাড় ও সবুজ প্রকৃতির মাঝে", note: "তোমার কাঁধে হাত রেখে দূরের রূপ দেখা", tilt: "-2.5deg", cat: "travel" },
+  { src: "/memories/memory-2.jpg", caption: "নদীর তীরে একসাথে", note: "তোমার মিষ্টি হাসিতে নদীটাও যেন শান্ত", tilt: "3deg", cat: "sweets" },
+  { src: "/memories/memory-3.jpg", caption: "গালে হাত দিয়ে সেই মিষ্টি হাসি", note: "তোমার এই চঞ্চল রূপটা আমার সবচেয়ে প্রিয়", tilt: "-1.5deg", cat: "smiles" },
+  { src: "/memories/memory-4.jpg", caption: "বার্সেলোনার জার্সিতে আমাদের ছবি", note: "একসাথে কাটানো অবিস্মরণীয় একটা বিকেল", tilt: "2.5deg", cat: "sweets" },
+  { src: "/memories/memory-5.jpg", caption: "রেস্টুরেন্টে মজার মুহূর্ত", note: "জিহ্বা বের করে তোমার সেই কিউট ফান", tilt: "-3deg", cat: "smiles" },
+  { src: "/memories/memory-6.jpg", caption: "সবুজের মাঝে পথচলা", note: "সারা জীবন এভাবেই পাশে পাশে চলতে চাই", tilt: "1.8deg", cat: "travel" },
+  { src: "/memories/memory-7.jpg", caption: "পানি নিয়ে খেলা", note: "নদীর ঠাণ্ডা পানিতে আমাদের অশেষ আনন্দ", tilt: "-2deg", cat: "sweets" },
+  { src: "/memories/memory-8.jpg", caption: "রোমান্টিক সান্ধ্য মুহূর্ত", note: "তোমার চোখের দিকে তাকিয়ে সময় থেমে যাওয়া", tilt: "3.2deg", cat: "travel" },
+  { src: "/memories/memory-9.jpg", caption: "চিরদিনের সেরা স্মৃতি", note: "আমাদের ভালোবাসার বন্ধন থাকুক অটুট", tilt: "-1.2deg", cat: "smiles" },
 ];
 
 const NOTES = [
@@ -171,13 +161,13 @@ function BirthdayPage() {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
             <Camera className="h-5 w-5 text-gold" />
-            <span>আমাদের মিষ্টি স্মৃতিগুলো</span>
+            <span>আমাদের আসল মিষ্টি স্মৃতিগুলো</span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl italic font-bold text-rose-deep">
             গল্পের রঙিন কিছু অ্যালবাম
           </h2>
           <p className="mt-3 text-rose-deep/70">
-            প্রতিটি ছবির পেছনে আছে আমাদের হাসিমুখের কিছু সুন্দর অনুভূতি
+            প্রতিটি ছবির পেছনে আছে আমাদের হাসিমুখের আসল ও সুন্দর কিছু মুহূর্ত
           </p>
 
           {/* Filter Pills */}
@@ -203,31 +193,36 @@ function BirthdayPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
           {filteredMemories.map((mem, i) => (
             <figure
               key={i}
               onClick={() => setLightboxIdx(i)}
-              className="scrapbook-shadow glass-card group relative cursor-pointer overflow-hidden rounded-2xl p-4 pb-8 transition-all duration-500 hover:-translate-y-2 hover:rotate-0 hover:scale-[1.03] hover:shadow-2xl border border-gold/25"
+              className="scrapbook-shadow group relative cursor-pointer rounded-2xl bg-white p-4 pb-8 transition-all duration-500 hover:-translate-y-3 hover:rotate-0 hover:scale-[1.03] hover:shadow-2xl border-4 border-amber-100/80"
               style={{
                 transform: `rotate(${mem.tilt})`,
                 marginTop: i % 3 === 1 ? "1.5rem" : undefined,
               }}
             >
-              <div className="relative overflow-hidden rounded-xl">
+              {/* Golden Washi Tape Aesthetic Accent */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 h-6 w-24 rounded-sm bg-gradient-to-r from-amber-200/80 via-yellow-100/90 to-amber-200/80 shadow-sm border border-amber-300/50 rotate-[-1deg] z-20" />
+
+              {/* Photo Frame Container */}
+              <div className="relative overflow-hidden rounded-xl border-2 border-gold/40 shadow-inner bg-slate-900">
                 <img
                   src={mem.src}
                   alt={mem.caption}
                   loading="lazy"
-                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="aspect-[3/4] w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-rose-deep/20 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-cream/90 text-rose-deep shadow-lg">
+                <div className="absolute inset-0 bg-rose-deep/25 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-cream/90 text-rose-deep shadow-xl border border-gold">
                     <Sparkles className="h-6 w-6 text-rose-deep" />
                   </span>
                 </div>
               </div>
 
+              {/* Photo Caption */}
               <figcaption className="mt-5 text-center">
                 <span className="block font-display text-lg font-bold text-rose-deep">
                   {mem.caption}
