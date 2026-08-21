@@ -152,6 +152,31 @@
   }
 }
 
+@keyframes float-heart {
+  0% {
+    transform: translateY(110vh) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(50vh) translateX(30px) rotate(180deg) scale(1);
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(-20px) rotate(360deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@utility animate-float-heart {
+  animation: float-heart var(--tw-animate-duration, 15s) ease-in-out infinite;
+}
+
 @utility scrapbook-shadow {
   box-shadow: 0 12px 35px -8px oklch(0.25 0.1 20 / 0.18), 0 4px 12px -2px oklch(0.25 0.1 20 / 0.12);
 }

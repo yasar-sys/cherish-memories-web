@@ -159,6 +159,24 @@ function BirthdayPage() {
       <Confetti />
       <MusicPlayer started={opened} />
 
+      {/* Floating Hearts Background Decoration */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {Array.from({ length: 15 }, (_, i) => (
+          <span
+            key={`heart-${i}`}
+            className="absolute text-rose-deep/15 animate-float-heart"
+            style={{
+              left: `${(i * 17 + 5) % 100}%`,
+              fontSize: `${14 + (i % 5) * 6}px`,
+              animationDelay: `${(i * 2.1) % 14}s`,
+              animationDuration: `${12 + (i % 7) * 3}s`,
+            }}
+          >
+            ♥
+          </span>
+        ))}
+      </div>
+
       {/* Hero Header Section */}
       <header className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <div
@@ -168,12 +186,15 @@ function BirthdayPage() {
             background: "radial-gradient(circle at center, var(--gold) 0%, transparent 65%)",
           }}
         />
+        {/* Romantic side glows */}
+        <div aria-hidden className="pointer-events-none absolute top-1/4 left-0 w-64 h-64 rounded-full bg-rose-deep/8 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute bottom-1/4 right-0 w-72 h-72 rounded-full bg-rose-mid/10 blur-3xl" />
 
         <div className="animate-reveal relative z-10 max-w-3xl">
           <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-6 py-2 backdrop-blur-md shadow-sm">
-            <Sparkles className="h-4 w-4 text-gold fill-gold" />
+            <Heart className="h-4 w-4 text-rose-deep fill-rose-deep animate-pulse" />
             <span className="font-accent text-lg text-rose-deep italic">For My Dearest One</span>
-            <Sparkles className="h-4 w-4 text-gold fill-gold" />
+            <Heart className="h-4 w-4 text-rose-deep fill-rose-deep animate-pulse" />
           </div>
 
           <h1 className="font-display mt-2 text-5xl sm:text-7xl md:text-8xl font-black italic tracking-tight text-rose-deep leading-tight drop-shadow-sm">
@@ -184,64 +205,28 @@ function BirthdayPage() {
             রাত ১২টা বেজে গেছে... আমাদের রাজকন্যার জন্মদিনের বিশেষ উৎসবের মুহূর্ত শুরু হলো ঠিক এখন থেকে।
           </p>
 
-          <p className="mt-6 flex items-center justify-center gap-2 text-sm text-rose-deep/60 italic font-sans">
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <span className="text-rose-deep/40">♥</span>
+            <span className="h-px w-16 bg-gradient-to-r from-transparent via-rose-deep/30 to-transparent" />
+            <span className="text-rose-deep/40">♥</span>
+            <span className="h-px w-16 bg-gradient-to-r from-transparent via-rose-deep/30 to-transparent" />
+            <span className="text-rose-deep/40">♥</span>
+          </div>
+
+          <p className="mt-4 flex items-center justify-center gap-2 text-sm text-rose-deep/60 italic font-sans">
             <span>নিচে স্ক্রল করে তোমার ভালোবাসার গ্যালাক্সিতে প্রবেশ করো</span>
             <ChevronDown className="h-4 w-4 animate-bounce text-rose-deep" />
           </p>
         </div>
 
         <a
-          href="#video-wish"
+          href="#memories"
           aria-label="নিচে যাও"
-          className="absolute bottom-10 flex h-10 w-10 items-center justify-center rounded-full border border-rose-deep/30 text-rose-deep opacity-70 transition-all hover:opacity-100 hover:scale-110"
+          className="absolute bottom-10 flex h-10 w-10 items-center justify-center rounded-full border border-rose-deep/30 bg-rose-deep/5 text-rose-deep opacity-70 transition-all hover:opacity-100 hover:scale-110 hover:bg-rose-deep/10"
         >
           <ChevronDown className="h-5 w-5 animate-bounce" />
         </a>
       </header>
-
-      {/* Birthday Video Wish Section */}
-      <section id="video-wish" className="relative z-10 mx-auto max-w-4xl px-6 py-20">
-        <div className="scrapbook-shadow glass-card relative rounded-3xl p-6 sm:p-10 border-2 border-gold/40 shadow-2xl text-center overflow-hidden">
-          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-5 py-1.5 text-xs font-bold text-rose-deep uppercase tracking-widest">
-            <Video className="h-4 w-4 text-gold" />
-            <span>আমার বিশেষ ভিডিও বার্তা</span>
-          </div>
-
-          <h2 className="font-display text-3xl sm:text-5xl font-bold italic text-rose-deep">
-            তোমার জন্য জন্মদিনের শুভকামনা 🎥
-          </h2>
-          <p className="mt-2 text-rose-deep/70 text-sm sm:text-base font-medium">
-            ভিডিওটিতে চাপ দিয়ে আমার ধারণ করা জন্মদিনের বিশেষ মেসেজটি শুনে নাও ♥
-          </p>
-
-          {/* Video Player Frame */}
-          <div className="mt-8 relative mx-auto max-w-2xl overflow-hidden rounded-2xl border-4 border-amber-100 bg-slate-950 shadow-2xl">
-            {!videoError ? (
-              <video
-                controls
-                preload="metadata"
-                className="w-full aspect-video rounded-xl object-cover"
-                onError={() => setVideoError(true)}
-              >
-                <source src="/wish.mp4" type="video/mp4" />
-                <source src="/video.mp4" type="video/mp4" />
-                <source src="/wish.webm" type="video/webm" />
-                আপনার ব্রাউজারে ভিডিওটি সমর্থিত নয়।
-              </video>
-            ) : (
-              <div className="flex flex-col items-center justify-center p-10 text-cream">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep/80 text-gold shadow-lg mb-4">
-                  <Play className="h-8 w-8 fill-gold ml-1" />
-                </div>
-                <h3 className="font-display text-xl font-bold text-gold">ভিডিও ফাইল যুক্ত করার সহজ নিয়ম</h3>
-                <p className="mt-2 text-xs text-cream/80 max-w-md leading-relaxed">
-                  তোমার ধারণ করা পছন্দের ভিডিওটি (MP4 ফরম্যাটে) নাম দিয়ে <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">wish.mp4</code> অথবা <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">video.mp4</code> নামে প্রজেক্টের <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">public</code> ফোল্ডারে পেস্ট করে দিলেই এখানে ভিডিওটি লাইভ চলবে!
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* Memory Gallery Section */}
       <section id="memories" className="relative z-10 mx-auto max-w-6xl px-6 py-24">
@@ -378,6 +363,8 @@ function BirthdayPage() {
 
       {/* Special Song & Full Lyrics Showcase Section */}
       <section className="relative z-10 mx-auto max-w-4xl px-6 py-20">
+        {/* Romantic glow behind lyrics */}
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-rose-deep/8 blur-3xl" />
         <div className="scrapbook-shadow glass-card relative rounded-3xl p-8 sm:p-12 border-2 border-gold/40 shadow-2xl text-center overflow-hidden">
           {/* Top Decorative Header */}
           <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-5 py-1.5 text-xs font-bold text-rose-deep uppercase tracking-widest">
@@ -390,9 +377,11 @@ function BirthdayPage() {
           </h2>
 
           <div className="my-8 flex items-center justify-center gap-4">
+            <span className="text-rose-deep/20">♥</span>
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep text-gold shadow-lg animate-vinyl">
               <Disc className="h-10 w-10" />
             </div>
+            <span className="text-rose-deep/20">♥</span>
           </div>
 
           {/* Full Song Lyrics */}
@@ -409,7 +398,10 @@ function BirthdayPage() {
       </section>
 
       {/* Heartfelt Love Letters */}
-      <section className="relative z-10 bg-gradient-to-b from-rose-deep/5 via-rose-deep/10 to-rose-deep/5 py-28 border-y border-gold/20">
+      <section className="relative z-10 bg-gradient-to-b from-rose-deep/5 via-rose-deep/12 to-rose-deep/5 py-28 border-y border-gold/20">
+        {/* Romantic ambient glows */}
+        <div aria-hidden className="pointer-events-none absolute top-20 left-10 w-48 h-48 rounded-full bg-rose-mid/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute bottom-20 right-10 w-56 h-56 rounded-full bg-gold/10 blur-3xl" />
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
@@ -422,14 +414,20 @@ function BirthdayPage() {
             <p className="mt-3 text-rose-deep/70">
               যে কথাগুলো মুখে কখনো স্পষ্ট বলা হয়নি, সেগুলো খামে বন্দি করে রাখলাম।
             </p>
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <span className="h-px w-12 bg-gradient-to-r from-transparent via-rose-deep/25 to-transparent" />
+              <Heart className="h-4 w-4 text-rose-deep/30 fill-rose-deep/30" />
+              <span className="h-px w-12 bg-gradient-to-r from-transparent via-rose-deep/25 to-transparent" />
+            </div>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
             {NOTES.map((n) => (
               <article
                 key={n.title}
-                className="scrapbook-shadow glass-card group relative rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-gold/30"
+                className="scrapbook-shadow glass-card group relative rounded-3xl p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gold/30"
               >
+                <div className="absolute -top-3 -right-3 text-rose-deep/10 text-4xl pointer-events-none">♥</div>
                 <div className="flex items-center justify-between mb-4 border-b border-rose-deep/10 pb-3">
                   <h3 className="font-accent text-2xl text-gold italic font-bold">
                     {n.title}
@@ -614,8 +612,67 @@ function BirthdayPage() {
         </div>
       </section>
 
+      {/* Birthday Video Wish Section — at the very bottom */}
+      <section id="video-wish" className="relative z-10 mx-auto max-w-2xl px-6 py-24">
+        {/* Romantic glow behind video */}
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-rose-deep/10 blur-3xl" />
+        <div className="scrapbook-shadow glass-card relative rounded-3xl p-6 sm:p-10 border-2 border-gold/40 shadow-2xl text-center overflow-hidden">
+          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-5 py-1.5 text-xs font-bold text-rose-deep uppercase tracking-widest">
+            <Video className="h-4 w-4 text-gold" />
+            <span>আমার বিশেষ ভিডিও বার্তা</span>
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-5xl font-bold italic text-rose-deep">
+            তোমার জন্য জন্মদিনের শুভকামনা ♥
+          </h2>
+          <p className="mt-2 text-rose-deep/70 text-sm sm:text-base font-medium">
+            ভিডিওটিতে চাপ দিয়ে আমার ধারণ করা জন্মদিনের বিশেষ মেসেজটি শুনে নাও
+          </p>
+
+          {/* Romantic heart divider */}
+          <div className="my-4 flex items-center justify-center gap-2">
+            <span className="h-px w-10 bg-gradient-to-r from-transparent via-rose-deep/20 to-transparent" />
+            <Heart className="h-3 w-3 text-rose-deep/30 fill-rose-deep/30" />
+            <span className="h-px w-10 bg-gradient-to-r from-transparent via-rose-deep/20 to-transparent" />
+          </div>
+
+          {/* Video Player Frame — Portrait Mode (9:16) */}
+          <div className="mt-6 relative mx-auto max-w-sm overflow-hidden rounded-2xl border-4 border-amber-100 bg-slate-950 shadow-2xl">
+            {!videoError ? (
+              <video
+                controls
+                preload="metadata"
+                className="w-full rounded-xl object-contain bg-black"
+                style={{ aspectRatio: '9 / 16' }}
+                onError={() => setVideoError(true)}
+              >
+                <source src="/wish.mp4" type="video/mp4" />
+                <source src="/video.mp4" type="video/mp4" />
+                <source src="/wish.webm" type="video/webm" />
+                আপনার ব্রাউজারে ভিডিওটি সমর্থিত নয়।
+              </video>
+            ) : (
+              <div className="flex flex-col items-center justify-center p-10 text-cream" style={{ aspectRatio: '9 / 16' }}>
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep/80 text-gold shadow-lg mb-4">
+                  <Play className="h-8 w-8 fill-gold ml-1" />
+                </div>
+                <h3 className="font-display text-xl font-bold text-gold">ভিডিও ফাইল যুক্ত করার সহজ নিয়ম</h3>
+                <p className="mt-2 text-xs text-cream/80 max-w-md leading-relaxed">
+                  তোমার ধারণ করা পছন্দের ভিডিওটি (MP4 ফরম্যাটে) নাম দিয়ে <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">wish.mp4</code> অথবা <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">video.mp4</code> নামে প্রজেক্টের <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">public</code> ফোল্ডারে পেস্ট করে দিলেই এখানে ভিডিওটি লাইভ চলবে!
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="relative z-10 py-16 text-center border-t border-rose-deep/10 bg-background">
+      <footer className="relative z-10 py-16 text-center border-t border-rose-deep/10 bg-gradient-to-b from-background to-rose-soft/30">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <span className="h-px w-16 bg-gradient-to-r from-transparent via-rose-deep/20 to-transparent" />
+          <Heart className="h-5 w-5 text-rose-deep/40 fill-rose-deep/40 animate-pulse" />
+          <span className="h-px w-16 bg-gradient-to-r from-transparent via-rose-deep/20 to-transparent" />
+        </div>
         <p className="font-accent text-2xl text-rose-deep/60 italic font-medium">
           Always yours, forever & always.
         </p>
