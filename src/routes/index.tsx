@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Heart, Camera, BookOpen, Send, Calendar, Star, ChevronDown } from "lucide-react";
+import { Sparkles, Heart, Camera, BookOpen, Send, Calendar, Star, ChevronDown, Music, Disc } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
-import { MusicPlayer } from "@/components/MusicPlayer";
+import { MusicPlayer, NILA_LYRICS } from "@/components/MusicPlayer";
 import { Petals } from "@/components/Petals";
 import { Lightbox } from "@/components/Lightbox";
 
@@ -243,6 +243,38 @@ function BirthdayPage() {
         onClose={() => setLightboxIdx(null)}
         onIndex={(idx) => setLightboxIdx(idx)}
       />
+
+      {/* Special Song & Full Lyrics Showcase Section */}
+      <section className="relative z-10 mx-auto max-w-4xl px-6 py-20">
+        <div className="scrapbook-shadow glass-card relative rounded-3xl p-8 sm:p-12 border-2 border-gold/40 shadow-2xl text-center overflow-hidden">
+          {/* Top Decorative Header */}
+          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-5 py-1.5 text-xs font-bold text-rose-deep uppercase tracking-widest">
+            <Music className="h-4 w-4 text-gold fill-gold" />
+            <span>আমাদের বিশেষ গান — নীলা (Miles)</span>
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-5xl font-bold italic text-rose-deep mt-2">
+            "নীলা, তুমি কি জানো না..."
+          </h2>
+
+          <div className="my-8 flex items-center justify-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep text-gold shadow-lg animate-vinyl">
+              <Disc className="h-10 w-10" />
+            </div>
+          </div>
+
+          {/* Full Song Lyrics */}
+          <div className="mx-auto max-w-lg rounded-2xl bg-rose-deep/5 p-6 border border-gold/20 shadow-inner">
+            <pre className="whitespace-pre-line font-bengali text-sm sm:text-base leading-relaxed text-rose-deep font-medium italic">
+              {NILA_LYRICS}
+            </pre>
+          </div>
+
+          <p className="mt-6 text-xs text-rose-deep/60 italic font-sans">
+            * উপরে ডানদিকের মিউজিক প্লেয়ার থেকে অথবা স্ক্রিনে ব্যাকগ্রাউন্ডে গানটি সবসময় বাজছে ♥
+          </p>
+        </div>
+      </section>
 
       {/* Heartfelt Love Letters */}
       <section className="relative z-10 bg-gradient-to-b from-rose-deep/5 via-rose-deep/10 to-rose-deep/5 py-28 border-y border-gold/20">

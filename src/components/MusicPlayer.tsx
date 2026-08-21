@@ -1,5 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import { Play, Pause, Volume2, VolumeX, Music, Disc } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Music, Disc, FileText } from "lucide-react";
+
+export const NILA_LYRICS = `তোমার চোখে
+চেয়ে দেখি আমি জীবনটাকে
+ভালোবাসার স্মৃতিগুলো
+তোমাকে শুধু চায়
+
+কিছু কথা
+কিছু আশা নিয়ে জীবনটাতে
+অনাবিল সব সুখের ছোঁয়ায়
+তোমাকে কাছে চাই
+
+ওই সুদূর নীলিমায়
+মন হারিয়ে যেতে চায়
+যেথায় সময় থেমে রয়
+তোমারই আশায়
+
+নীলা, তুমি কি চাও না হারাতে ওই নীলিমায়
+যেখানে দু'টি মন এক হয়ে ছবির মতো জেগে রয়
+
+নীলা, তুমি কি জানো না আমার হৃদয়ের ঠিকানা
+যেখানে তোমার আমার প্রেম মিলে মিশে এক হয়`;
 
 export function MusicPlayer({ started }: { started: boolean }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -10,6 +31,7 @@ export function MusicPlayer({ started }: { started: boolean }) {
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(0.7);
   const [expanded, setExpanded] = useState(false);
+  const [showLyrics, setShowLyrics] = useState(false);
   const [usingSynth, setUsingSynth] = useState(false);
 
   // Synthesize smooth romantic melody if standard mp3 audio fails or is blocked
@@ -83,7 +105,6 @@ export function MusicPlayer({ started }: { started: boolean }) {
           setPlaying(true);
         })
         .catch(() => {
-          // If browser blocked media play without interaction, fallback to synth on user gesture
           setPlaying(false);
         });
     }
@@ -168,8 +189,17 @@ export function MusicPlayer({ started }: { started: boolean }) {
               নীলা (Neela)
             </span>
             <span className="font-sans text-[10px] text-rose-deep/70">
-              {playing ? (usingSynth ? "সুর বাজছে ♪" : "ব্যান্ড গান — মাইলেস") : "গান চালাতে চাপুন"}
+              {playing ? (usingSynth ? "সুর বাজছে ♪" : "মাইলস (Miles)") : "গান চালাতে চাপুন"}
             </span>
+          </button>
+
+          {/* Lyrics Button */}
+          <button
+            onClick={() => setShowLyrics(!showLyrics)}
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-gold/20 text-rose-deep transition-transform hover:scale-110"
+            title="গানের লিরিক্স"
+          >
+            <FileText className="h-3.5 w-3.5" />
           </button>
 
           {/* Play/Pause Main Button */}
@@ -184,14 +214,14 @@ export function MusicPlayer({ started }: { started: boolean }) {
 
         {/* Expanded Controller Drawer */}
         {expanded && (
-          <div className="scrapbook-shadow glass-card animate-reveal mt-2 w-64 rounded-2xl p-4 border border-gold/30 text-rose-deep shadow-2xl">
+          <div className="scrapbook-shadow glass-card animate-reveal mt-2 w-72 rounded-2xl p-4 border border-gold/30 text-rose-deep shadow-2xl">
             <div className="flex items-center justify-between pb-2 border-b border-rose-deep/10">
               <div className="flex items-center gap-2">
                 <Music className="h-4 w-4 text-gold" />
-                <span className="font-display text-xs font-semibold">ব্যাকগ্রাউন্ড মিউজিক</span>
+                <span className="font-display text-xs font-semibold">নীলা — মাইলস (Miles)</span>
               </div>
               <span className="rounded-full bg-rose-deep/10 px-2 py-0.5 text-[9px] font-semibold text-rose-deep">
-                HD Audio
+                Official Track
               </span>
             </div>
 
@@ -221,9 +251,30 @@ export function MusicPlayer({ started }: { started: boolean }) {
               </span>
             </div>
 
-            <p className="mt-3 text-[10px] text-center text-rose-deep/60 italic">
-              "নীলা তুমি কি জানো না..." — তোমার ভালোবাসার গান
+            <p className="mt-3 text-[11px] text-center text-rose-deep/80 italic font-medium">
+              "নীলা, তুমি কি জানো না আমার হৃদয়ের ঠিকানা..."
             </p>
+          </div>
+        )}
+
+        {/* Lyrics Drawer Modal */}
+        {showLyrics && (
+          <div className="scrapbook-shadow glass-card animate-reveal mt-2 max-h-80 w-80 overflow-y-auto rounded-2xl p-5 border border-gold/40 text-rose-deep shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-rose-deep/15">
+              <div className="flex items-center gap-2">
+                <Music className="h-4 w-4 text-gold" />
+                <span className="font-display text-sm font-bold">নীলা গানের সম্পূর্ণ লিরিক্স</span>
+              </div>
+              <button
+                onClick={() => setShowLyrics(false)}
+                className="text-xs font-bold text-rose-deep/60 hover:text-rose-deep"
+              >
+                ✕
+              </button>
+            </div>
+            <pre className="mt-4 whitespace-pre-line font-bengali text-xs leading-relaxed text-rose-deep/90 text-center font-medium">
+              {NILA_LYRICS}
+            </pre>
           </div>
         )}
       </div>
