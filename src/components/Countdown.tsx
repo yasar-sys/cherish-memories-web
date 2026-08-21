@@ -29,7 +29,7 @@ export function Countdown({ onReady }: { onReady: () => void }) {
         {done ? "সময় হয়ে গেছে" : "আর একটু অপেক্ষা"}
       </h1>
 
-      {!done && (
+      {now !== null && !done && (
         <div className="mt-10 flex items-baseline justify-center gap-5">
           <Unit value={r.hours} label="ঘণ্টা" />
           <span className="font-display text-4xl opacity-25">:</span>
