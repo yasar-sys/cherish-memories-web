@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye, MapPin, Clock, MessageCircle, ExternalLink, Check } from "lucide-react";
+import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye, MapPin, Clock, MessageCircle, ExternalLink, Check, Video, Play } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
@@ -96,6 +96,9 @@ function BirthdayPage() {
   const [dodge, setDodge] = useState(0);
   const [filter, setFilter] = useState("all");
 
+  // Video State & Fallback
+  const [videoError, setVideoError] = useState(false);
+
   // State to track flipped cards
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
 
@@ -128,8 +131,6 @@ function BirthdayPage() {
 
   const handleConfirmRSVP = () => {
     setConfirmedRSVP(true);
-    const rsvpMessage = `আমি রাজি! ♥\n\n📅 তারিখ: ${selectedDate}\n⏰ সময়: ${selectedTime}\n📍 স্থান: ${selectedSpot}\n${customNote ? `💬 নোট: ${customNote}\n` : ""}\nসময়মতো চলে এসো কিন্তু! ♥`;
-    
     // Open messenger link directly
     window.open(MESSENGER_URL, "_blank");
   };
@@ -190,13 +191,57 @@ function BirthdayPage() {
         </div>
 
         <a
-          href="#memories"
+          href="#video-wish"
           aria-label="নিচে যাও"
           className="absolute bottom-10 flex h-10 w-10 items-center justify-center rounded-full border border-rose-deep/30 text-rose-deep opacity-70 transition-all hover:opacity-100 hover:scale-110"
         >
           <ChevronDown className="h-5 w-5 animate-bounce" />
         </a>
       </header>
+
+      {/* Birthday Video Wish Section */}
+      <section id="video-wish" className="relative z-10 mx-auto max-w-4xl px-6 py-20">
+        <div className="scrapbook-shadow glass-card relative rounded-3xl p-6 sm:p-10 border-2 border-gold/40 shadow-2xl text-center overflow-hidden">
+          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-5 py-1.5 text-xs font-bold text-rose-deep uppercase tracking-widest">
+            <Video className="h-4 w-4 text-gold" />
+            <span>আমার বিশেষ ভিডিও বার্তা</span>
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-5xl font-bold italic text-rose-deep">
+            তোমার জন্য জন্মদিনের শুভকামনা 🎥
+          </h2>
+          <p className="mt-2 text-rose-deep/70 text-sm sm:text-base font-medium">
+            ভিডিওটিতে চাপ দিয়ে আমার ধারণ করা জন্মদিনের বিশেষ মেসেজটি শুনে নাও ♥
+          </p>
+
+          {/* Video Player Frame */}
+          <div className="mt-8 relative mx-auto max-w-2xl overflow-hidden rounded-2xl border-4 border-amber-100 bg-slate-950 shadow-2xl">
+            {!videoError ? (
+              <video
+                controls
+                preload="metadata"
+                className="w-full aspect-video rounded-xl object-cover"
+                onError={() => setVideoError(true)}
+              >
+                <source src="/wish.mp4" type="video/mp4" />
+                <source src="/video.mp4" type="video/mp4" />
+                <source src="/wish.webm" type="video/webm" />
+                আপনার ব্রাউজারে ভিডিওটি সমর্থিত নয়।
+              </video>
+            ) : (
+              <div className="flex flex-col items-center justify-center p-10 text-cream">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep/80 text-gold shadow-lg mb-4">
+                  <Play className="h-8 w-8 fill-gold ml-1" />
+                </div>
+                <h3 className="font-display text-xl font-bold text-gold">ভিডিও ফাইল যুক্ত করার সহজ নিয়ম</h3>
+                <p className="mt-2 text-xs text-cream/80 max-w-md leading-relaxed">
+                  তোমার ধারণ করা পছন্দের ভিডিওটি (MP4 ফরম্যাটে) নাম দিয়ে <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">wish.mp4</code> অথবা <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">video.mp4</code> নামে প্রজেক্টের <code className="bg-gold/20 px-2 py-0.5 rounded text-gold font-mono">public</code> ফোল্ডারে পেস্ট করে দিলেই এখানে ভিডিওটি লাইভ চলবে!
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
 
       {/* Memory Gallery Section */}
       <section id="memories" className="relative z-10 mx-auto max-w-6xl px-6 py-24">
