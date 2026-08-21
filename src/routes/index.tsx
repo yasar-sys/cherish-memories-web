@@ -55,7 +55,7 @@ const NOTES = [
   },
   {
     title: "#৩ ছোট ছোট মিষ্টি অভ্যাস",
-    body: "তোমার রাগ করে চুপ করে থাকা, হুট করে ছোট বাচ্চার মতো হেসে ফেলা, কিংবা খাওয়ার সময় আমার প্লেট থেকে খাবার কেড়ে নেওয়া — এই ছোট জিনিসগুলোই আমার জীবন রঙিন করে।",
+    body: "তোমার রাগ করে চুপ করে থাকা, হুট করে ছোট বাচ্চার মতো হেসে ফেলা, কিংবা সময়ে অসময় ভন্ডামি করা— এই ছোট জিনিসগুলোই আমার জীবন রঙিন করে।",
     icon: "🌸",
   },
   {
@@ -90,7 +90,7 @@ const TIME_OPTIONS = [
 
 // ─── EmailJS Config ────────────────────────────────────────
 // তোমার emailjs.com account থেকে এই ৩টি value বসাও:
-const EMAILJS_SERVICE_ID = " service_ahhykxj";   // e.g. "service_abc123"
+const EMAILJS_SERVICE_ID = "service_ahhykxj";   // e.g. "service_abc123"
 const EMAILJS_TEMPLATE_ID = "template_l4hqqvm"; // e.g. "template_xyz456"
 const EMAILJS_PUBLIC_KEY = "2SFSPEFNPnORe_YCD";    // e.g. "user_abc123def456"
 // EmailJS Template-এ এই variables ব্যবহার করো:
@@ -226,7 +226,7 @@ function BirthdayPage() {
           </div>
 
           <h1 className="font-display mt-2 text-5xl sm:text-7xl md:text-8xl font-black italic tracking-tight text-rose-deep leading-tight drop-shadow-sm">
-            শুভ জন্মদিন, প্রিয়!
+            শুভ জন্মদিন, প্রিয় রাহি!
           </h1>
 
           <p className="mx-auto mt-8 max-w-lg text-lg sm:text-xl leading-relaxed text-rose-deep/80 font-medium">
@@ -242,7 +242,7 @@ function BirthdayPage() {
           </div>
 
           <p className="mt-4 flex items-center justify-center gap-2 text-sm text-rose-deep/60 italic font-sans">
-            <span>নিচে স্ক্রল করে তোমার ভালোবাসার গ্যালাক্সিতে প্রবেশ করো</span>
+            <span>নিচে স্ক্রল করে তোমার আমার ভালোবাসার গ্যালাক্সিতে প্রবেশ করো</span>
             <ChevronDown className="h-4 w-4 animate-bounce text-rose-deep" />
           </p>
         </div>
