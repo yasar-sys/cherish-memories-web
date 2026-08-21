@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye, MapPin, Clock, MessageCircle, ExternalLink, Check, Video, Play } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye, MapPin, Clock, Send, Check, Video, Play } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
@@ -87,7 +88,13 @@ const TIME_OPTIONS = [
   "রাত ৭:০০ (ক্যান্ডেল লাইট ডিনার)",
 ];
 
-const MESSENGER_URL = "https://www.facebook.com/share/1CcsYzThUk/";
+// ─── EmailJS Config ────────────────────────────────────────
+// তোমার emailjs.com account থেকে এই ৩টি value বসাও:
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";   // e.g. "service_abc123"
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // e.g. "template_xyz456"
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";    // e.g. "user_abc123def456"
+// EmailJS Template-এ এই variables ব্যবহার করো:
+// {{spot}}, {{date}}, {{time}}, {{note}}, {{message}}
 
 function BirthdayPage() {
   const [opened, setOpened] = useState(false);
@@ -108,6 +115,8 @@ function BirthdayPage() {
   const [selectedTime, setSelectedTime] = useState(TIME_OPTIONS[1]);
   const [customNote, setCustomNote] = useState("");
   const [confirmedRSVP, setConfirmedRSVP] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
 
   const toggleFlip = (id: number) => {
     setFlippedCards((prev) => ({
@@ -129,10 +138,29 @@ function BirthdayPage() {
     }
   };
 
-  const handleConfirmRSVP = () => {
-    setConfirmedRSVP(true);
-    // Open messenger link directly
-    window.open(MESSENGER_URL, "_blank");
+  const handleConfirmRSVP = async () => {
+    setSending(true);
+    setSendError(false);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          spot: selectedSpot,
+          date: selectedDate,
+          time: selectedTime,
+          note: customNote || "কোনো বিশেষ নোট নেই",
+          message: `🎂 Birthday Date RSVP!\n\n📍 স্থান: ${selectedSpot}\n📅 তারিখ: ${selectedDate}\n⏰ সময়: ${selectedTime}\n💌 নোট: ${customNote || "কোনো বিশেষ নোট নেই"}`,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      setConfirmedRSVP(true);
+    } catch (err) {
+      console.error("EmailJS Error:", err);
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const filteredMemories = filter === "all" ? MEMORIES : MEMORIES.filter((m) => m.cat === filter);
