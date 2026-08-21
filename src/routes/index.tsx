@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Sparkles, Heart, Camera, BookOpen, Send, Calendar, Star, ChevronDown } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
 import { MusicPlayer } from "@/components/MusicPlayer";
 import { Petals } from "@/components/Petals";
+import { Lightbox } from "@/components/Lightbox";
 
 import m1 from "@/assets/memory-1.jpg.asset.json";
 import m2 from "@/assets/memory-2.jpg.asset.json";
@@ -19,16 +21,16 @@ import m9 from "@/assets/memory-9.jpg.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "শুভ জন্মদিন — আমাদের গল্পের ছোট্ট একটা খাতা" },
+      { title: "শুভ জন্মদিন — আমাদের গল্পের একটা খাতা" },
       {
         name: "description",
         content:
-          "আমাদের ছবি, কিছু ভালোবাসার চিঠি আর একটা ছোট্ট অনুরোধ — সব মিলিয়ে তোমার জন্মদিনের উপহার।",
+          "আমাদের রঙিন ছবি, কিছু ভালোবাসার চিঠি আর একটা ছোট্ট নিমন্ত্রণ — সব মিলিয়ে তোমার জন্মদিনের মিষ্টি উপহার।",
       },
-      { property: "og:title", content: "শুভ জন্মদিন — আমাদের গল্পের ছোট্ট একটা খাতা" },
+      { property: "og:title", content: "শুভ জন্মদিন — আমাদের গল্পের একটা খাতা" },
       {
         property: "og:description",
-        content: "ছবি, চিঠি আর নীলা গান — শুধু তোমার জন্য বানানো একটা পাতা।",
+        content: "ছবি, চিঠি আর নীলা ব্যান্ড গান — শুধু তোমার জন্য বানানো এক ভালোবাসার পাতা।",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -38,172 +40,300 @@ export const Route = createFileRoute("/")({
 });
 
 const MEMORIES = [
-  { src: m1.url, tilt: "-2deg" },
-  { src: m2.url, tilt: "3deg" },
-  { src: m3.url, tilt: "-1deg" },
-  { src: m4.url, tilt: "2deg" },
-  { src: m5.url, tilt: "-3deg" },
-  { src: m6.url, tilt: "1deg" },
-  { src: m7.url, tilt: "-2deg" },
-  { src: m8.url, tilt: "3deg" },
-  { src: m9.url, tilt: "-1deg" },
+  { src: m1.url, caption: "প্রথম দেখার মিষ্টি দিন", note: "যেদিন প্রথম তোমার চোখের দিকে তাকিয়েছিলাম", tilt: "-2.5deg", cat: "sweets" },
+  { src: m2.url, caption: "হাসির সেই ঝিলিক", note: "তোমার হাসিটা আমার সবচেয়ে প্রিয় দৃশ্য", tilt: "3deg", cat: "smiles" },
+  { src: m3.url, caption: "এক সাথে কিছুটা সময়", note: "বিকেলের হালকা হাওয়ায় পাশাপাশি হাঁটা", tilt: "-1.5deg", cat: "travel" },
+  { src: m4.url, caption: "আড্ডার গল্পগুলো", note: "চা এর কাপে ঘণ্টার পর ঘণ্টা গল্প", tilt: "2.5deg", cat: "sweets" },
+  { src: m5.url, caption: "বৃষ্টির সেই বিকাল", note: "একই ছাতার নিচে বৃষ্টির শব্দ শোনা", tilt: "-3deg", cat: "travel" },
+  { src: m6.url, caption: "খুশির বাঁধভাঙা মুহূর্ত", note: "তোমার সেই অকারণ খুশির চিৎকার", tilt: "1.8deg", cat: "smiles" },
+  { src: m7.url, caption: "অভিমানের পর মিল", note: "রাগ ভাঙানোর পর তোমার অভিমানী চোখ", tilt: "-2deg", cat: "sweets" },
+  { src: m8.url, caption: "সন্ধ্যার লাল আলো", note: "সূর্যাস্তের সাথে তোমার রূপের দ্যুতি", tilt: "3.2deg", cat: "travel" },
+  { src: m9.url, caption: "চিরদিনের একসাথে থাকা", note: "হাতে হাত রেখে অনাগত ভবিষ্যতের স্বপ্নে", tilt: "-1.2deg", cat: "smiles" },
 ];
 
 const NOTES = [
   {
-    title: "#১ প্রথম কথা",
-    body: "তোমার হাসি দেখলে মনে হয় পৃথিবীটা আসলেই সুন্দর। আজকের এই দিনে শুধু একটাই কথা — আমি তোমাকে সারা জীবন ঠিক এভাবেই ভালোবাসতে চাই।",
+    title: "#১ ভালোবাসার প্রথম কথা",
+    body: "তোমার মিষ্টি হাসি দেখলে মনে হয় পৃথিবীটা আসলেই চমৎকার। আজকের এই বিশেষ দিনে শুধু একটাই কথা বারবার বলতে চাই — আমি তোমাকে সারা জীবন ঠিক এভাবেই আগলে রাখতে চাই।",
+    icon: "♥",
   },
   {
     title: "#২ তোমার জন্য প্রার্থনা",
-    body: "প্রতিটা সকাল যেন তোমার জন্য নতুন আনন্দ নিয়ে আসে। তুমি আমার জীবনের সেই ধ্রুবতারা, যে আমাকে সবসময় পথ দেখায়।",
+    body: "প্রতিটি ভোর যেন তোমার জীবনে নতুন আনন্দ ও শান্তি নিয়ে আসে। তুমি আমার জীবনের সেই ধ্রুবতারা, যে অন্ধকার রাতেও আমাকে আলোর ঠিকানা দেখায়।",
+    icon: "✨",
   },
   {
-    title: "#৩ ছোট ছোট জিনিস",
-    body: "তোমার রাগ করে চুপ থাকা, হুট করে হেসে ফেলা, খাওয়ার সময় আমার প্লেট থেকে তুলে নেওয়া — এই ছোট জিনিসগুলোই আমার সবচেয়ে প্রিয়।",
+    title: "#৩ ছোট ছোট মিষ্টি অভ্যাস",
+    body: "তোমার রাগ করে চুপ করে থাকা, হুট করে ছোট বাচ্চার মতো হেসে ফেলা, কিংবা খাওয়ার সময় আমার প্লেট থেকে খাবার কেড়ে নেওয়া — এই ছোট জিনিসগুলোই আমার জীবন রঙিন করে।",
+    icon: "🌸",
   },
   {
-    title: "#৪ একটা প্রতিশ্রুতি",
-    body: "ভালো দিনে পাশে থাকা সহজ। আমি খারাপ দিনগুলোতেও থাকব — এটাই আমার জন্মদিনের উপহার।",
+    title: "#৪ আমার শেষ প্রতিশ্রুতি",
+    body: "খুশির দিনে সবাই পাশে থাকে, তবে তোমার সবচেয়ে কঠিন আর অন্ধকার দিনগুলোতেও আমি তোমার হাত শক্ত করে ধরে রাখব — এটাই আমার পক্ষ থেকে তোমার জন্মদিনের উপহার।",
+    icon: "💍",
   },
+];
+
+const INITIAL_WISHES = [
+  { name: "প্রিয়তম", text: "শুভ জন্মদিন রাজকন্যা! সারা জীবন এমন মিষ্টি হাসিতে থেকো।", time: "রাত ১২:০০" },
+  { name: "তোমার ভক্ত", text: "আজকের দিনটি তোমার মতোই সুন্দর ও আনন্দময় হোক! ♥", time: "রাত ১২:০১" },
 ];
 
 function BirthdayPage() {
   const [opened, setOpened] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [answer, setAnswer] = useState<null | "yes">(null);
   const [dodge, setDodge] = useState(0);
+  const [filter, setFilter] = useState("all");
+
+  // Wish Book State
+  const [wishes, setWishes] = useState(INITIAL_WISHES);
+  const [newWishName, setNewWishName] = useState("");
+  const [newWishText, setNewWishText] = useState("");
+
+  const filteredMemories = filter === "all" ? MEMORIES : MEMORIES.filter((m) => m.cat === filter);
+
+  const handleAddWish = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newWishText.trim()) return;
+    const name = newWishName.trim() || "শুভানুধ্যায়ী";
+    const now = new Date();
+    const timeStr = `${now.getHours()}:${now.getMinutes() < 10 ? "0" : ""}${now.getMinutes()}`;
+    setWishes([{ name, text: newWishText.trim(), time: timeStr }, ...wishes]);
+    setNewWishText("");
+    setNewWishName("");
+  };
 
   if (!opened) {
     return (
-      <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 bg-gradient-to-b from-cream via-rose-soft/30 to-cream">
         <Petals />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-25"
+          className="pointer-events-none absolute inset-0 opacity-40 animate-pulse-glow"
           style={{
-            background: "radial-gradient(circle at center, var(--gold) 0%, transparent 65%)",
+            background: "radial-gradient(circle at center, var(--gold) 0%, transparent 60%)",
           }}
         />
-        <div className="relative z-10">
-          <Countdown onReady={() => setOpened(true)} />
-        </div>
+        <Countdown onReady={() => setOpened(true)} />
       </main>
     );
   }
 
   return (
-    <main className="relative overflow-hidden">
+    <main className="relative overflow-hidden bg-background text-foreground transition-colors duration-500">
       <Petals />
       <Confetti />
       <MusicPlayer started={opened} />
 
+      {/* Hero Header Section */}
       <header className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-25"
+          className="pointer-events-none absolute inset-0 opacity-30 animate-pulse-glow"
           style={{
             background: "radial-gradient(circle at center, var(--gold) 0%, transparent 65%)",
           }}
         />
-        <div className="animate-reveal relative z-10">
-          <p className="font-accent text-2xl text-gold italic">For my only one,</p>
-          <h1 className="font-display mt-3 text-6xl italic tracking-tight text-rose-deep md:text-8xl">
-            শুভ জন্মদিন, প্রিয়
+
+        <div className="animate-reveal relative z-10 max-w-3xl">
+          <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-6 py-2 backdrop-blur-md shadow-sm">
+            <Sparkles className="h-4 w-4 text-gold fill-gold" />
+            <span className="font-accent text-lg text-rose-deep italic">For My Dearest One</span>
+            <Sparkles className="h-4 w-4 text-gold fill-gold" />
+          </div>
+
+          <h1 className="font-display mt-2 text-5xl sm:text-7xl md:text-8xl font-black italic tracking-tight text-rose-deep leading-tight drop-shadow-sm">
+            শুভ জন্মদিন, প্রিয়!
           </h1>
-          <p className="mx-auto mt-10 max-w-md text-lg leading-relaxed text-rose-deep/70">
-            রাত ১২টা বেজে গেছে। আমাদের রাজকন্যার জন্মদিনের শুরু এখন থেকে...
+
+          <p className="mx-auto mt-8 max-w-lg text-lg sm:text-xl leading-relaxed text-rose-deep/80 font-medium">
+            রাত ১২টা বেজে গেছে... আমাদের রাজকন্যার জন্মদিনের বিশেষ উৎসবের মুহূর্ত শুরু হলো ঠিক এখন থেকে।
           </p>
-          <p className="mt-4 text-sm text-rose-deep/40 italic">
-            নিচে স্ক্রল করো — পুরোটা তোমার জন্য।
+
+          <p className="mt-6 flex items-center justify-center gap-2 text-sm text-rose-deep/60 italic font-sans">
+            <span>নিচে স্ক্রল করে তোমার ভালোবাসার গ্যালাক্সিতে প্রবেশ করো</span>
+            <ChevronDown className="h-4 w-4 animate-bounce text-rose-deep" />
           </p>
         </div>
-        <div aria-hidden className="absolute bottom-10 h-12 w-px animate-bounce bg-rose-deep/20" />
+
+        <a
+          href="#memories"
+          aria-label="নিচে যাও"
+          className="absolute bottom-10 flex h-10 w-10 items-center justify-center rounded-full border border-rose-deep/30 text-rose-deep opacity-70 transition-all hover:opacity-100 hover:scale-110"
+        >
+          <ChevronDown className="h-5 w-5 animate-bounce" />
+        </a>
       </header>
 
-      <section className="relative z-10 mx-auto max-w-6xl px-6 py-28">
-        <h2 className="font-display mb-16 text-center text-4xl italic text-rose-deep">
-          আমাদের কিছু মুহূর্ত
-        </h2>
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-          {MEMORIES.map((mem, i) => (
+      {/* Memory Gallery Section */}
+      <section id="memories" className="relative z-10 mx-auto max-w-6xl px-6 py-24">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
+            <Camera className="h-5 w-5 text-gold" />
+            <span>আমাদের মিষ্টি স্মৃতিগুলো</span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl italic font-bold text-rose-deep">
+            গল্পের রঙিন কিছু অ্যালবাম
+          </h2>
+          <p className="mt-3 text-rose-deep/70">
+            প্রতিটি ছবির পেছনে আছে আমাদের হাসিমুখের কিছু সুন্দর অনুভূতি
+          </p>
+
+          {/* Filter Pills */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+            {[
+              { id: "all", label: "সব স্মৃতি" },
+              { id: "sweets", label: "মিষ্টি মুহূর্ত" },
+              { id: "smiles", label: "হাসিমুখ" },
+              { id: "travel", label: "ঘোরাঘুরি" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setFilter(tab.id)}
+                className={`rounded-full px-5 py-2 text-xs font-semibold tracking-wider transition-all duration-300 ${
+                  filter === tab.id
+                    ? "bg-rose-deep text-cream shadow-md scale-105"
+                    : "glass-card text-rose-deep/80 hover:bg-rose-deep/10"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredMemories.map((mem, i) => (
             <figure
               key={i}
-              className="scrapbook-shadow bg-card p-4 pb-10 transition-transform duration-500 hover:rotate-0 hover:scale-[1.02]"
-              style={{ transform: `rotate(${mem.tilt})`, marginTop: i % 3 === 1 ? "2.5rem" : undefined }}
+              onClick={() => setLightboxIdx(i)}
+              className="scrapbook-shadow glass-card group relative cursor-pointer overflow-hidden rounded-2xl p-4 pb-8 transition-all duration-500 hover:-translate-y-2 hover:rotate-0 hover:scale-[1.03] hover:shadow-2xl border border-gold/25"
+              style={{
+                transform: `rotate(${mem.tilt})`,
+                marginTop: i % 3 === 1 ? "1.5rem" : undefined,
+              }}
             >
-              <img
-                src={mem.src}
-                alt={mem.caption}
-                loading="lazy"
-                className="aspect-[4/5] w-full object-cover"
-              />
-              <figcaption className="mt-4 text-center">
-                <span className="block text-sm text-rose-deep">{mem.caption}</span>
-                <span className="font-accent block text-rose-deep/50 italic">{mem.note}</span>
+              <div className="relative overflow-hidden rounded-xl">
+                <img
+                  src={mem.src}
+                  alt={mem.caption}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-rose-deep/20 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-cream/90 text-rose-deep shadow-lg">
+                    <Sparkles className="h-6 w-6 text-rose-deep" />
+                  </span>
+                </div>
+              </div>
+
+              <figcaption className="mt-5 text-center">
+                <span className="block font-display text-lg font-bold text-rose-deep">
+                  {mem.caption}
+                </span>
+                <span className="font-accent block mt-1 text-base text-rose-deep/70 italic">
+                  {mem.note}
+                </span>
               </figcaption>
             </figure>
           ))}
         </div>
       </section>
 
-      <section className="relative z-10 bg-rose-deep/5 py-24">
-        <div className="mx-auto max-w-4xl px-6">
-          <h2 className="font-display mb-16 text-center text-4xl italic text-rose-deep">
-            হৃদয়ের কিছু কথা
-          </h2>
+      {/* Lightbox Modal */}
+      <Lightbox
+        images={MEMORIES.map((m) => m.src)}
+        index={lightboxIdx}
+        onClose={() => setLightboxIdx(null)}
+        onIndex={(idx) => setLightboxIdx(idx)}
+      />
+
+      {/* Heartfelt Love Letters */}
+      <section className="relative z-10 bg-gradient-to-b from-rose-deep/5 via-rose-deep/10 to-rose-deep/5 py-28 border-y border-gold/20">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
+              <BookOpen className="h-5 w-5 text-gold" />
+              <span>একুশটি অনুভূতির পাতা</span>
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl italic font-bold text-rose-deep">
+              হৃদয়ের গভীরের কিছু কথা
+            </h2>
+            <p className="mt-3 text-rose-deep/70">
+              যে কথাগুলো মুখে কখনো স্পষ্ট বলা হয়নি, সেগুলো খামে বন্দি করে রাখলাম।
+            </p>
+          </div>
+
           <div className="grid gap-8 md:grid-cols-2">
             {NOTES.map((n) => (
-              <article key={n.title} className="scrapbook-shadow group relative bg-card p-10">
-                <div
-                  aria-hidden
-                  className="absolute top-3 right-3 h-8 w-8 rounded-full border border-gold opacity-15 transition-opacity group-hover:opacity-100"
-                />
-                <h3 className="font-accent mb-4 text-xl text-gold italic">{n.title}</h3>
-                <p className="leading-relaxed text-rose-deep/80">{n.body}</p>
+              <article
+                key={n.title}
+                className="scrapbook-shadow glass-card group relative rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-gold/30"
+              >
+                <div className="flex items-center justify-between mb-4 border-b border-rose-deep/10 pb-3">
+                  <h3 className="font-accent text-2xl text-gold italic font-bold">
+                    {n.title}
+                  </h3>
+                  <span className="text-xl">{n.icon}</span>
+                </div>
+                <p className="leading-relaxed text-rose-deep/85 font-medium text-base">
+                  {n.body}
+                </p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 flex justify-center px-6 py-32">
-        <div className="scrapbook-shadow relative w-full max-w-lg border-t-8 border-rose-deep bg-card p-12 text-center">
-          <span className="absolute -top-5 left-1/2 -translate-x-1/2 rounded-full bg-rose-deep px-6 py-2 text-xs tracking-widest text-primary-foreground">
-            AN INVITATION
+      {/* Interactive Date Invitation Section */}
+      <section className="relative z-10 flex justify-center px-6 py-28">
+        <div className="scrapbook-shadow glass-card relative w-full max-w-xl rounded-3xl border-t-8 border-rose-deep p-8 sm:p-14 text-center border-x border-b border-gold/30 shadow-2xl">
+          <span className="absolute -top-5 left-1/2 -translate-x-1/2 rounded-full bg-rose-deep px-6 py-2 text-xs font-bold tracking-widest text-primary-foreground shadow-md uppercase">
+            A Special Invitation
           </span>
 
           {answer === "yes" ? (
-            <div className="animate-reveal">
-              <p className="font-display text-3xl italic text-rose-deep">তাহলে কাল দেখা হচ্ছে ♥</p>
-              <p className="mt-4 leading-relaxed text-rose-deep/70">
-                আমি ঠিক সময়ে পৌঁছে যাব। তুমি শুধু সুন্দর করে সেজে এসো — বাকিটা আমার দায়িত্ব।
+            <div className="animate-reveal py-4">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep text-gold shadow-lg">
+                <Heart className="h-8 w-8 fill-gold" />
+              </div>
+              <h3 className="font-display text-3xl sm:text-4xl italic font-bold text-rose-deep">
+                তাহলে কাল দেখা হচ্ছে ♥
+              </h3>
+              <p className="mt-4 leading-relaxed text-rose-deep/80 font-medium text-lg">
+                আমি ঠিক সময়ে পৌঁছে যাব। তুমি শুধু সুন্দর করে সেজে থেকো — বাকি সব মিষ্টি সারপ্রাইজ দেওয়ার দায়িত্ব আমার!
               </p>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold/20 px-5 py-2 text-xs font-semibold text-rose-deep">
+                <Calendar className="h-4 w-4 text-rose-deep" />
+                <span>Date locked for tomorrow!</span>
+              </div>
             </div>
           ) : (
             <>
-              <h3 className="font-display mt-4 mb-6 text-3xl text-rose-deep">
+              <h3 className="font-display mt-4 mb-4 text-3xl sm:text-4xl font-bold text-rose-deep leading-tight">
                 কালকে কি আমার সাথে ঘুরতে বের হবে?
               </h3>
-              <p className="mb-10 text-rose-deep/60 italic">
-                একটা ছোট্ট সারপ্রাইজ অপেক্ষা করছে তোমার জন্য...
+              <p className="mb-8 text-rose-deep/70 italic text-base">
+                তোমার প্রিয় জায়গা আর একটা ছোট মিষ্টি সারপ্রাইজ অপেক্ষা করছে...
               </p>
 
-              <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <div className="flex flex-col justify-center gap-4 sm:flex-row items-center min-h-[70px]">
                 <button
                   onClick={() => setAnswer("yes")}
-                  className="group relative rounded-sm bg-rose-deep px-10 py-4 text-primary-foreground transition-all hover:pr-12"
+                  className="scrapbook-shadow group relative rounded-full bg-gradient-to-r from-rose-deep via-rose-mid to-rose-deep px-10 py-4 font-bold text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 min-w-[180px]"
                 >
-                  <span>হ্যাঁ, অবশ্যই!</span>
-                  <span className="absolute top-1/2 right-4 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100">
-                    ♥
+                  <span className="flex items-center justify-center gap-2">
+                    হ্যাঁ, অবশ্যই! <Heart className="h-4 w-4 fill-primary-foreground" />
                   </span>
                 </button>
+
                 <button
                   onMouseEnter={() => setDodge((d) => d + 1)}
                   onClick={() => setDodge((d) => d + 1)}
-                  className="rounded-sm border border-border px-10 py-4 text-rose-deep/40 transition-transform duration-300"
+                  className="rounded-full border border-rose-deep/30 px-8 py-3.5 text-sm font-semibold text-rose-deep/60 transition-all duration-300 hover:border-rose-deep"
                   style={{
-                    transform: `translate(${(dodge % 2 ? 1 : -1) * Math.min(dodge * 18, 90)}px, ${Math.min(dodge * 7, 40)}px)`,
+                    transform: `translate(${(dodge % 2 ? 1 : -1) * Math.min(dodge * 24, 110)}px, ${Math.min(dodge * 8, 45)}px)`,
                   }}
                 >
                   {dodge > 2 ? "ধরতে পারছ না তো!" : "না, কাজ আছে"}
@@ -212,14 +342,86 @@ function BirthdayPage() {
             </>
           )}
 
-          <p className="mt-8 border-t border-border pt-8 text-xs text-rose-deep/40 italic">
-            *হ্যাঁ বললে সময়মতো রেডি থেকো কিন্তু!
+          <p className="mt-8 border-t border-rose-deep/10 pt-6 text-xs text-rose-deep/50 italic">
+            *হ্যাঁ বললে কিন্তু সময়মতো একদম তৈরি থেকো!
           </p>
         </div>
       </section>
 
-      <footer className="relative z-10 py-12 text-center">
-        <p className="font-accent text-rose-deep/40 italic">Always yours, forever.</p>
+      {/* Interactive Birthday Wish Book */}
+      <section className="relative z-10 bg-rose-deep/5 py-24 border-t border-gold/20">
+        <div className="mx-auto max-w-3xl px-6">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
+              <Star className="h-5 w-5 text-gold fill-gold" />
+              <span>জন্মদিনের শুভেচ্ছাবার্তা</span>
+            </div>
+            <h2 className="font-display text-4xl font-bold text-rose-deep">
+              ভালোবাসার খাতা
+            </h2>
+            <p className="mt-2 text-rose-deep/70 text-sm">
+              এখানে তোমার সুন্দর জন্মদিনের শুভকামনাটি লিখে রেখে যাও।
+            </p>
+          </div>
+
+          {/* Input Form */}
+          <form onSubmit={handleAddWish} className="scrapbook-shadow glass-card rounded-2xl p-6 mb-10 border border-gold/30">
+            <div className="flex flex-col gap-4 sm:flex-row mb-4">
+              <input
+                type="text"
+                placeholder="তোমার নাম (ঐচ্ছিক)"
+                value={newWishName}
+                onChange={(e) => setNewWishName(e.target.value)}
+                className="w-full sm:w-1/3 rounded-xl border border-rose-deep/20 bg-background/80 px-4 py-3 text-sm text-rose-deep focus:border-rose-deep focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder="জন্মদিনের মিষ্টি বার্তাটি লেখো..."
+                value={newWishText}
+                onChange={(e) => setNewWishText(e.target.value)}
+                className="w-full sm:w-2/3 rounded-xl border border-rose-deep/20 bg-background/80 px-4 py-3 text-sm text-rose-deep focus:border-rose-deep focus:outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full sm:w-auto ml-auto flex items-center justify-center gap-2 rounded-xl bg-rose-deep px-6 py-3 text-xs font-bold text-cream shadow-md transition-transform hover:scale-105 active:scale-95"
+            >
+              <span>বার্তা পাঠাও</span>
+              <Send className="h-3.5 w-3.5" />
+            </button>
+          </form>
+
+          {/* Wishes List */}
+          <div className="space-y-4">
+            {wishes.map((w, idx) => (
+              <div
+                key={idx}
+                className="glass-card flex items-start gap-4 rounded-2xl p-5 border border-gold/20 shadow-sm"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-deep/10 text-rose-deep font-bold font-accent text-lg">
+                  ♥
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-display font-bold text-rose-deep text-sm">{w.name}</span>
+                    <span className="text-[10px] text-rose-deep/50">{w.time}</span>
+                  </div>
+                  <p className="mt-1 text-sm text-rose-deep/80 font-medium">{w.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative z-10 py-16 text-center border-t border-rose-deep/10 bg-background">
+        <p className="font-accent text-2xl text-rose-deep/60 italic font-medium">
+          Always yours, forever & always.
+        </p>
+        <p className="mt-2 text-xs font-sans text-rose-deep/40">
+          ভালোবাসা দিয়ে নির্মিত — শুভ জন্মদিন ♥
+        </p>
       </footer>
     </main>
   );

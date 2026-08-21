@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Lightbox({
   images,
@@ -36,50 +37,57 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-rose-deep/90 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-rose-deep/85 p-4 backdrop-blur-md transition-all duration-300"
     >
+      {/* Close Button */}
       <button
         aria-label="বন্ধ করো"
         onClick={onClose}
-        className="absolute top-5 right-6 text-3xl text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+        className="absolute top-6 right-6 flex h-11 w-11 items-center justify-center rounded-full bg-cream/15 text-cream border border-cream/30 transition-all hover:bg-cream/30 hover:scale-110 active:scale-95"
       >
-        ×
+        <X className="h-6 w-6" />
       </button>
 
+      {/* Prev Button */}
       <button
         aria-label="আগের ছবি"
         onClick={(e) => {
           e.stopPropagation();
           onIndex((i - 1 + images.length) % images.length);
         }}
-        className="absolute left-3 z-10 px-4 py-6 text-4xl text-primary-foreground/60 transition-colors hover:text-primary-foreground md:left-8"
+        className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-cream/15 text-cream border border-cream/30 transition-all hover:bg-cream/30 hover:scale-110 active:scale-95 md:left-8"
       >
-        ‹
+        <ChevronLeft className="h-7 w-7" />
       </button>
 
+      {/* Main Image Frame */}
       <figure
         onClick={(e) => e.stopPropagation()}
-        className="scrapbook-shadow animate-reveal max-h-[88vh] bg-card p-3"
+        className="scrapbook-shadow animate-reveal max-h-[88vh] max-w-[92vw] rounded-2xl bg-card p-4 sm:p-6 border border-gold/30"
       >
         <img
           src={images[i]}
           alt={`আমাদের মুহূর্ত ${i + 1}`}
-          className="max-h-[76vh] w-auto object-contain"
+          className="max-h-[72vh] w-auto max-w-full rounded-xl object-contain shadow-md"
         />
-        <figcaption className="mt-3 text-center text-xs tracking-widest text-rose-deep/50">
-          {i + 1} / {images.length}
+        <figcaption className="mt-4 flex items-center justify-between border-t border-rose-deep/10 pt-3 text-xs tracking-wider text-rose-deep/70">
+          <span className="font-display font-semibold">আমাদের মধুর স্মৃতি #{i + 1}</span>
+          <span className="font-sans rounded-full bg-rose-deep/10 px-3 py-1 font-medium text-rose-deep">
+            {i + 1} / {images.length}
+          </span>
         </figcaption>
       </figure>
 
+      {/* Next Button */}
       <button
         aria-label="পরের ছবি"
         onClick={(e) => {
           e.stopPropagation();
           onIndex((i + 1) % images.length);
         }}
-        className="absolute right-3 z-10 px-4 py-6 text-4xl text-primary-foreground/60 transition-colors hover:text-primary-foreground md:right-8"
+        className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-cream/15 text-cream border border-cream/30 transition-all hover:bg-cream/30 hover:scale-110 active:scale-95 md:right-8"
       >
-        ›
+        <ChevronRight className="h-7 w-7" />
       </button>
     </div>
   );
