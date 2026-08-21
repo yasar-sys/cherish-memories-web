@@ -90,9 +90,9 @@ const TIME_OPTIONS = [
 
 // ─── EmailJS Config ────────────────────────────────────────
 // তোমার emailjs.com account থেকে এই ৩টি value বসাও:
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";   // e.g. "service_abc123"
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // e.g. "template_xyz456"
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";    // e.g. "user_abc123def456"
+const EMAILJS_SERVICE_ID = " service_ahhykxj";   // e.g. "service_abc123"
+const EMAILJS_TEMPLATE_ID = "template_l4hqqvm"; // e.g. "template_xyz456"
+const EMAILJS_PUBLIC_KEY = "2SFSPEFNPnORe_YCD";    // e.g. "user_abc123def456"
 // EmailJS Template-এ এই variables ব্যবহার করো:
 // {{spot}}, {{date}}, {{time}}, {{note}}, {{message}}
 
