@@ -616,7 +616,7 @@ function BirthdayPage() {
                   className="scrapbook-shadow group relative rounded-full bg-gradient-to-r from-rose-deep via-rose-mid to-rose-deep px-10 py-4 font-bold text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 min-w-[180px]"
                 >
                   <span className="flex items-center justify-center gap-2">
-                    হ্যাঁ, অবশ্যই! <Heart className="h-4 w-4 fill-primary-foreground" />
+                    হ্যাঁ, অবশ্যই! কিন্তু আজ এখানে চাপ দিলে error দেখাবে কারণ এক্সাম <Heart className="h-4 w-4 fill-primary-foreground" />
                   </span>
                 </button>
 
