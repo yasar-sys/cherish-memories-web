@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye } from "lucide-react";
+import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye, MapPin, Clock, MessageCircle, ExternalLink, Check } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
@@ -64,6 +64,31 @@ const NOTES = [
   },
 ];
 
+const MYMENSINGH_SPOTS = [
+  { id: "zainul", name: "শিল্পাচার্য জয়নুল আবেদিন পার্ক ও ব্রহ্মপুত্র নদ", desc: "নদীর মিষ্টি হাওয়ায় পাশাপাশি হাঁটা ও সূর্যাস্ত দেখা" },
+  { id: "shashi", name: "শশী লজ (ময়মনসিংহ রাজবাড়ি)", desc: "রাজকীয় পরিবেশ ও সবুজ বাগান ঘেরা রোমান্টিক আড্ডা" },
+  { id: "alexander", name: "অ্যালেকজান্ডার ক্যাসেল (লোহার কুঠি)", desc: "ঐতিহাসিক ভিনটেজ আবহে নিরিবিলি কিছু সময় কাটানো" },
+  { id: "bau", name: "কৃষি বিশ্ববিদ্যালয় বোটানিক্যাল গার্ডেন", desc: "গাছের ছায়ায় পাখির ডাকে শান্ত সময় কাটানো" },
+  { id: "muktagacha", name: "মুক্তাগাছা জমিদার বাড়ি", desc: "জমিদার বাড়ির ঐতিহ্য ও মিষ্টি ছানার মণ্ডা খাওয়া" },
+  { id: "boat", name: "ব্রহ্মপুত্র নদীতে রোমান্টিক নৌকা ভ্রমণ ও কফি", desc: "নৌকার ছৈয়ে বসে নদী পার হওয়া ও মিষ্টি কফি কাপের আড্ডা" },
+];
+
+const DATE_OPTIONS = [
+  "আগামীকাল (Tomorrow)",
+  "এই শুক্রবার (This Friday)",
+  "এই শনিবার (This Saturday)",
+  "তোমার সুবিধামতো যেকোনো বিশেষ দিন",
+];
+
+const TIME_OPTIONS = [
+  "বিকেল ৪:৩০ (সূর্যাস্তের মিষ্টি সময়)",
+  "বিকেল ৫:০০ (ব্রহ্মপুত্রের ঠান্ডা হাওয়া)",
+  "সন্ধ্যা ৬:০০ (সন্ধ্যা কফি আড্ডা)",
+  "রাত ৭:০০ (ক্যান্ডেল লাইট ডিনার)",
+];
+
+const MESSENGER_URL = "https://www.facebook.com/share/1CcsYzThUk/";
+
 function BirthdayPage() {
   const [opened, setOpened] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
@@ -71,8 +96,15 @@ function BirthdayPage() {
   const [dodge, setDodge] = useState(0);
   const [filter, setFilter] = useState("all");
 
-  // State to track which card IDs are flipped face-up (revealed)
+  // State to track flipped cards
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+
+  // RSVP Form State
+  const [selectedSpot, setSelectedSpot] = useState(MYMENSINGH_SPOTS[0].name);
+  const [selectedDate, setSelectedDate] = useState(DATE_OPTIONS[0]);
+  const [selectedTime, setSelectedTime] = useState(TIME_OPTIONS[1]);
+  const [customNote, setCustomNote] = useState("");
+  const [confirmedRSVP, setConfirmedRSVP] = useState(false);
 
   const toggleFlip = (id: number) => {
     setFlippedCards((prev) => ({
@@ -92,6 +124,14 @@ function BirthdayPage() {
       });
       setFlippedCards(nextState);
     }
+  };
+
+  const handleConfirmRSVP = () => {
+    setConfirmedRSVP(true);
+    const rsvpMessage = `আমি রাজি! ♥\n\n📅 তারিখ: ${selectedDate}\n⏰ সময়: ${selectedTime}\n📍 স্থান: ${selectedSpot}\n${customNote ? `💬 নোট: ${customNote}\n` : ""}\nসময়মতো চলে এসো কিন্তু! ♥`;
+    
+    // Open messenger link directly
+    window.open(MESSENGER_URL, "_blank");
   };
 
   const filteredMemories = filter === "all" ? MEMORIES : MEMORIES.filter((m) => m.cat === filter);
@@ -360,36 +400,143 @@ function BirthdayPage() {
         </div>
       </section>
 
-      {/* Interactive Date Invitation Section */}
+      {/* Interactive Date Invitation & Mymensingh Location RSVP Section */}
       <section className="relative z-10 flex justify-center px-6 py-28">
-        <div className="scrapbook-shadow glass-card relative w-full max-w-xl rounded-3xl border-t-8 border-rose-deep p-8 sm:p-14 text-center border-x border-b border-gold/30 shadow-2xl">
+        <div className="scrapbook-shadow glass-card relative w-full max-w-2xl rounded-3xl border-t-8 border-rose-deep p-8 sm:p-14 border-x border-b border-gold/30 shadow-2xl">
           <span className="absolute -top-5 left-1/2 -translate-x-1/2 rounded-full bg-rose-deep px-6 py-2 text-xs font-bold tracking-widest text-primary-foreground shadow-md uppercase">
-            A Special Invitation
+            A Special Birthday Date Invitation
           </span>
 
           {answer === "yes" ? (
-            <div className="animate-reveal py-4">
+            <div className="animate-reveal text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rose-deep text-gold shadow-lg">
                 <Heart className="h-8 w-8 fill-gold" />
               </div>
+              
               <h3 className="font-display text-3xl sm:text-4xl italic font-bold text-rose-deep">
-                তাহলে কাল দেখা হচ্ছে ♥
+                আজকের এই বিশেষ ডেট প্ল্যানার ♥
               </h3>
-              <p className="mt-4 leading-relaxed text-rose-deep/80 font-medium text-lg">
-                আমি ঠিক সময়ে পৌঁছে যাব। তুমি শুধু সুন্দর করে সেজে থেকো — বাকি সব মিষ্টি সারপ্রাইজ দেওয়ার দায়িত্ব আমার!
+              <p className="mt-2 text-rose-deep/80 font-medium text-base">
+                ময়মনসিংহের সবচেয়ে সুন্দর জায়গাগুলো থেকে তোমার পছন্দমতো স্থান, তারিখ ও সময় বেছে নাও:
               </p>
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold/20 px-5 py-2 text-xs font-semibold text-rose-deep">
-                <Calendar className="h-4 w-4 text-rose-deep" />
-                <span>Date locked for tomorrow!</span>
+
+              {/* Location Picker */}
+              <div className="mt-8 text-left">
+                <label className="flex items-center gap-2 font-display text-base font-bold text-rose-deep mb-3">
+                  <MapPin className="h-5 w-5 text-gold" />
+                  <span>১. ময়মনসিংহের প্রিয় স্থান নির্বাচন করো:</span>
+                </label>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {MYMENSINGH_SPOTS.map((spot) => (
+                    <div
+                      key={spot.id}
+                      onClick={() => setSelectedSpot(spot.name)}
+                      className={`cursor-pointer rounded-2xl p-4 transition-all duration-300 border ${
+                        selectedSpot === spot.name
+                          ? "bg-rose-deep text-cream border-gold shadow-lg scale-[1.02]"
+                          : "glass-card text-rose-deep hover:bg-rose-deep/10 border-gold/20"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-display font-bold text-sm">{spot.name}</span>
+                        {selectedSpot === spot.name && (
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold text-rose-deep">
+                            <Check className="h-3.5 w-3.5 stroke-[3]" />
+                          </span>
+                        )}
+                      </div>
+                      <p className={`mt-1 text-xs ${selectedSpot === spot.name ? "text-cream/80" : "text-rose-deep/70"}`}>
+                        {spot.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Date & Time Selectors */}
+              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 text-left">
+                {/* Date Picker */}
+                <div>
+                  <label className="flex items-center gap-2 font-display text-base font-bold text-rose-deep mb-2">
+                    <Calendar className="h-5 w-5 text-gold" />
+                    <span>২. তারিখ নির্বাচন:</span>
+                  </label>
+                  <select
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-full rounded-2xl border border-gold/40 bg-white/90 px-4 py-3 text-sm font-semibold text-rose-deep focus:border-rose-deep focus:outline-none shadow-sm"
+                  >
+                    {DATE_OPTIONS.map((d) => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Time Picker */}
+                <div>
+                  <label className="flex items-center gap-2 font-display text-base font-bold text-rose-deep mb-2">
+                    <Clock className="h-5 w-5 text-gold" />
+                    <span>৩. সময় নির্বাচন:</span>
+                  </label>
+                  <select
+                    value={selectedTime}
+                    onChange={(e) => setSelectedTime(e.target.value)}
+                    className="w-full rounded-2xl border border-gold/40 bg-white/90 px-4 py-3 text-sm font-semibold text-rose-deep focus:border-rose-deep focus:outline-none shadow-sm"
+                  >
+                    {TIME_OPTIONS.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Optional Custom Note */}
+              <div className="mt-6 text-left">
+                <label className="font-display text-sm font-bold text-rose-deep mb-2 block">
+                  ৪. তোমার বিশেষ কোনো মেসেজ (ঐচ্ছিক):
+                </label>
+                <input
+                  type="text"
+                  placeholder="যেমন: সাথে আমার প্রিয় কফি খেতে হবে কিন্তু..."
+                  value={customNote}
+                  onChange={(e) => setCustomNote(e.target.value)}
+                  className="w-full rounded-2xl border border-gold/30 bg-white/90 px-4 py-3 text-sm text-rose-deep focus:border-rose-deep focus:outline-none shadow-sm"
+                />
+              </div>
+
+              {/* RSVP Actions & Messenger Direct Transmission */}
+              <div className="mt-10 pt-6 border-t border-rose-deep/15 text-center">
+                <p className="text-xs text-rose-deep/70 mb-4 font-medium">
+                  নিচের বাটনে চাপ দিলে তোমার এই চয়েসটি সরাসরি আমার ফেসবুকে/মেসেঞ্জারে মেসেজ আকারে চলে আসবে ♥
+                </p>
+
+                <button
+                  onClick={handleConfirmRSVP}
+                  className="scrapbook-shadow group relative inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-rose-deep via-rose-mid to-rose-deep px-10 py-4 font-bold text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-2xl active:scale-95 text-base w-full sm:w-auto"
+                >
+                  <MessageCircle className="h-5 w-5 text-gold fill-gold" />
+                  <span>মেসেঞ্জারে কনফার্ম করো (Send to Messenger)</span>
+                  <ExternalLink className="h-4 w-4" />
+                </button>
+
+                {confirmedRSVP && (
+                  <p className="mt-4 text-sm font-bold text-emerald-700 animate-pulse">
+                    ✓ মেসেঞ্জার ওপেন হয়েছে! মেসেজটি সেন্ড করে দাও ♥
+                  </p>
+                )}
               </div>
             </div>
           ) : (
-            <>
+            <div className="text-center">
               <h3 className="font-display mt-4 mb-4 text-3xl sm:text-4xl font-bold text-rose-deep leading-tight">
                 কালকে কি আমার সাথে ঘুরতে বের হবে?
               </h3>
               <p className="mb-8 text-rose-deep/70 italic text-base">
-                তোমার প্রিয় জায়গা আর একটা ছোট মিষ্টি সারপ্রাইজ অপেক্ষা করছে...
+                ময়মনসিংহের সুন্দর জায়গাগুলোতে তোমার জন্য একটা দারুণ মিষ্টি সারপ্রাইজ অপেক্ষা করছে...
               </p>
 
               <div className="flex flex-col justify-center gap-4 sm:flex-row items-center min-h-[70px]">
@@ -413,12 +560,12 @@ function BirthdayPage() {
                   {dodge > 2 ? "ধরতে পারছ না তো!" : "না, কাজ আছে"}
                 </button>
               </div>
-            </>
-          )}
 
-          <p className="mt-8 border-t border-rose-deep/10 pt-6 text-xs text-rose-deep/50 italic">
-            *হ্যাঁ বললে কিন্তু সময়মতো একদম তৈরি থেকো!
-          </p>
+              <p className="mt-8 border-t border-rose-deep/10 pt-6 text-xs text-rose-deep/50 italic">
+                *হ্যাঁ বললে ময়মনসিংহের সেরা জায়গাগুলো থেকে তোমার পছন্দের প্লেস ও টাইম বেছে নিতে পারবে!
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
