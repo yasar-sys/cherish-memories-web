@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc } from "lucide-react";
+import { Sparkles, Heart, Camera, BookOpen, Calendar, ChevronDown, Music, Disc, RefreshCw, Eye } from "lucide-react";
 
 import { Confetti } from "@/components/Confetti";
 import { Countdown } from "@/components/Countdown";
@@ -30,15 +30,15 @@ export const Route = createFileRoute("/")({
 });
 
 const MEMORIES = [
-  { src: "/memories/memory-1.jpg", caption: "পাহাড় ও সবুজ প্রকৃতির মাঝে", note: "তোমার কাঁধে হাত রেখে দূরের রূপ দেখা", tilt: "-2.5deg", cat: "travel" },
-  { src: "/memories/memory-2.jpg", caption: "নদীর তীরে একসাথে", note: "তোমার মিষ্টি হাসিতে নদীটাও যেন শান্ত", tilt: "3deg", cat: "sweets" },
-  { src: "/memories/memory-3.jpg", caption: "গালে হাত দিয়ে সেই মিষ্টি হাসি", note: "তোমার এই চঞ্চল রূপটা আমার সবচেয়ে প্রিয়", tilt: "-1.5deg", cat: "smiles" },
-  { src: "/memories/memory-4.jpg", caption: "বার্সেলোনার জার্সিতে আমাদের ছবি", note: "একসাথে কাটানো অবিস্মরণীয় একটা বিকেল", tilt: "2.5deg", cat: "sweets" },
-  { src: "/memories/memory-5.jpg", caption: "রেস্টুরেন্টে মজার মুহূর্ত", note: "জিহ্বা বের করে তোমার সেই কিউট ফান", tilt: "-3deg", cat: "smiles" },
-  { src: "/memories/memory-6.jpg", caption: "সবুজের মাঝে পথচলা", note: "সারা জীবন এভাবেই পাশে পাশে চলতে চাই", tilt: "1.8deg", cat: "travel" },
-  { src: "/memories/memory-7.jpg", caption: "পানি নিয়ে খেলা", note: "নদীর ঠাণ্ডা পানিতে আমাদের অশেষ আনন্দ", tilt: "-2deg", cat: "sweets" },
-  { src: "/memories/memory-8.jpg", caption: "রোমান্টিক সান্ধ্য মুহূর্ত", note: "তোমার চোখের দিকে তাকিয়ে সময় থেমে যাওয়া", tilt: "3.2deg", cat: "travel" },
-  { src: "/memories/memory-9.jpg", caption: "চিরদিনের সেরা স্মৃতি", note: "আমাদের ভালোবাসার বন্ধন থাকুক অটুট", tilt: "-1.2deg", cat: "smiles" },
+  { id: 0, src: "/memories/memory-1.jpg", caption: "পাহাড় ও সবুজ প্রকৃতির মাঝে", note: "তোমার কাঁধে হাত রেখে দূরের রূপ দেখা", tilt: "-2.5deg", cat: "travel" },
+  { id: 1, src: "/memories/memory-2.jpg", caption: "নদীর তীরে একসাথে", note: "তোমার মিষ্টি হাসিতে নদীটাও যেন শান্ত", tilt: "3deg", cat: "sweets" },
+  { id: 2, src: "/memories/memory-3.jpg", caption: "গালে হাত দিয়ে সেই মিষ্টি হাসি", note: "তোমার এই চঞ্চল রূপটা আমার সবচেয়ে প্রিয়", tilt: "-1.5deg", cat: "smiles" },
+  { id: 3, src: "/memories/memory-4.jpg", caption: "বার্সেলোনার জার্সিতে আমাদের ছবি", note: "একসাথে কাটানো অবিস্মরণীয় একটা বিকেল", tilt: "2.5deg", cat: "sweets" },
+  { id: 4, src: "/memories/memory-5.jpg", caption: "রেস্টুরেন্টে মজার মুহূর্ত", note: "জিহ্বা বের করে তোমার সেই কিউট ফান", tilt: "-3deg", cat: "smiles" },
+  { id: 5, src: "/memories/memory-6.jpg", caption: "গাছের ছায়ায় মিষ্টি কোলাকুলি", note: "যেখানে সময় থমকে যায় তোমার ছোঁয়ায়", tilt: "1.8deg", cat: "travel" },
+  { id: 6, src: "/memories/memory-7.jpg", caption: "জার্সি পরে সুন্দর এক সেলফি", note: "তোমার গালে হাত দিয়ে মিষ্টি মুহূর্ত", tilt: "-2deg", cat: "sweets" },
+  { id: 7, src: "/memories/memory-8.jpg", caption: "রাতের আলোয় জোড়া মুখ", note: "চাঁদের আলোতেও তোমার চোখের কালো তারা", tilt: "3.2deg", cat: "smiles" },
+  { id: 8, src: "/memories/memory-9.jpg", caption: "নৌকায় পাশাপাশি কাটানো সময়", note: "জল আর বাতাসের মাঝে তোমার আমার গল্প", tilt: "-1.2deg", cat: "travel" },
 ];
 
 const NOTES = [
@@ -70,6 +70,29 @@ function BirthdayPage() {
   const [answer, setAnswer] = useState<null | "yes">(null);
   const [dodge, setDodge] = useState(0);
   const [filter, setFilter] = useState("all");
+
+  // State to track which card IDs are flipped face-up (revealed)
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+
+  const toggleFlip = (id: number) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const handleRevealAll = () => {
+    const allFlipped = MEMORIES.every((m) => flippedCards[m.id]);
+    if (allFlipped) {
+      setFlippedCards({});
+    } else {
+      const nextState: Record<number, boolean> = {};
+      MEMORIES.forEach((m) => {
+        nextState[m.id] = true;
+      });
+      setFlippedCards(nextState);
+    }
+  };
 
   const filteredMemories = filter === "all" ? MEMORIES : MEMORIES.filter((m) => m.cat === filter);
 
@@ -140,19 +163,19 @@ function BirthdayPage() {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
             <Camera className="h-5 w-5 text-gold" />
-            <span>আমাদের আসল মিষ্টি স্মৃতিগুলো</span>
+            <span>আমাদের আসল ৯টি মিষ্টি স্মৃতি</span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl italic font-bold text-rose-deep">
-            গল্পের রঙিন কিছু অ্যালবাম
+            গল্পের রঙিন অ্যালবাম
           </h2>
           <p className="mt-3 text-rose-deep/70">
-            প্রতিটি ছবির পেছনে আছে আমাদের হাসিমুখের আসল ও সুন্দর কিছু মুহূর্ত
+            প্রতিটি কার্ড উল্টানো আছে — ছবি ও স্মৃতিটি দেখতে কার্ডের উপর চাপো (Flip Card)!
           </p>
 
-          {/* Filter Pills */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+          {/* Filter Pills & Flip All Button */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             {[
-              { id: "all", label: "সব স্মৃতি" },
+              { id: "all", label: "সব স্মৃতি (৯টি)" },
               { id: "sweets", label: "মিষ্টি মুহূর্ত" },
               { id: "smiles", label: "হাসিমুখ" },
               { id: "travel", label: "ঘোরাঘুরি" },
@@ -169,49 +192,94 @@ function BirthdayPage() {
                 {tab.label}
               </button>
             ))}
+
+            {/* Reveal All Toggle */}
+            <button
+              onClick={handleRevealAll}
+              className="inline-flex items-center gap-1.5 rounded-full border border-gold bg-gold/20 px-5 py-2 text-xs font-bold text-rose-deep shadow-md transition-all hover:bg-gold/40 hover:scale-105"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>{MEMORIES.every((m) => flippedCards[m.id]) ? "সব ঢেকে দাও" : "সবগুলো উল্টাও"}</span>
+            </button>
           </div>
         </div>
 
+        {/* 3D Flip Card Gallery Grid */}
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredMemories.map((mem, i) => (
-            <figure
-              key={i}
-              onClick={() => setLightboxIdx(i)}
-              className="scrapbook-shadow group relative cursor-pointer rounded-2xl bg-white p-4 pb-8 transition-all duration-500 hover:-translate-y-3 hover:rotate-0 hover:scale-[1.03] hover:shadow-2xl border-4 border-amber-100/80"
-              style={{
-                transform: `rotate(${mem.tilt})`,
-                marginTop: i % 3 === 1 ? "1.5rem" : undefined,
-              }}
-            >
-              {/* Golden Washi Tape Aesthetic Accent */}
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 h-6 w-24 rounded-sm bg-gradient-to-r from-amber-200/80 via-yellow-100/90 to-amber-200/80 shadow-sm border border-amber-300/50 rotate-[-1deg] z-20" />
+          {filteredMemories.map((mem) => {
+            const isFlipped = !!flippedCards[mem.id];
 
-              {/* Photo Frame Container */}
-              <div className="relative overflow-hidden rounded-xl border-2 border-gold/40 shadow-inner bg-slate-900">
-                <img
-                  src={mem.src}
-                  alt={mem.caption}
-                  loading="lazy"
-                  className="aspect-[3/4] w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-rose-deep/25 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-cream/90 text-rose-deep shadow-xl border border-gold">
-                    <Sparkles className="h-6 w-6 text-rose-deep" />
-                  </span>
+            return (
+              <div
+                key={mem.id}
+                className="perspective-1000 min-h-[440px] cursor-pointer"
+                style={{ marginTop: mem.id % 3 === 1 ? "1.5rem" : undefined }}
+                onClick={() => toggleFlip(mem.id)}
+              >
+                <div
+                  className={`transform-style-3d relative h-full w-full rounded-2xl transition-transform duration-700 ${
+                    isFlipped ? "rotate-y-180" : ""
+                  }`}
+                  style={{ transform: `${isFlipped ? "rotateY(180deg)" : "rotateY(0deg)"} rotate(${mem.tilt})` }}
+                >
+                  {/* FACE DOWN (Ultano Back Side) */}
+                  <div className="backface-hidden scrapbook-shadow absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-rose-deep via-rose-mid to-rose-deep p-6 text-center border-4 border-gold/40 shadow-2xl">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 h-6 w-24 rounded-sm bg-gradient-to-r from-amber-200/80 via-yellow-100/90 to-amber-200/80 shadow-sm border border-amber-300/50 rotate-[-1deg]" />
+
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-cream/10 border-2 border-gold/50 shadow-inner mb-4">
+                      <Heart className="h-10 w-10 text-gold fill-gold animate-pulse" />
+                    </div>
+
+                    <span className="font-accent text-3xl text-gold italic font-bold">
+                      Memory #{mem.id + 1}
+                    </span>
+
+                    <p className="mt-3 text-sm text-cream/90 font-medium">
+                      আমাদের গোপন একটি বিশেষ মুহূর্ত ♥
+                    </p>
+
+                    <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold/20 px-4 py-1.5 text-xs font-bold text-cream border border-gold/30">
+                      <Eye className="h-3.5 w-3.5 text-gold" />
+                      <span>ছবিটি দেখতে ট্যাপ করো (Flip)</span>
+                    </div>
+                  </div>
+
+                  {/* FACE UP (Flipped Front Side - Real Couple Photo) */}
+                  <div className="backface-hidden rotate-y-180 scrapbook-shadow absolute inset-0 flex flex-col justify-between rounded-2xl bg-white p-4 pb-6 border-4 border-amber-100/80 shadow-2xl">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 h-6 w-24 rounded-sm bg-gradient-to-r from-amber-200/80 via-yellow-100/90 to-amber-200/80 shadow-sm border border-amber-300/50 rotate-[-1deg] z-20" />
+
+                    <div className="relative overflow-hidden rounded-xl border-2 border-gold/40 shadow-inner bg-slate-900 flex-1">
+                      <img
+                        src={mem.src}
+                        alt={mem.caption}
+                        loading="lazy"
+                        className="h-full w-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                      />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLightboxIdx(mem.id);
+                        }}
+                        className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-cream/90 text-rose-deep shadow-lg border border-gold hover:scale-110"
+                        title="ছবিটি বড় করে দেখুন"
+                      >
+                        <Sparkles className="h-4 w-4 text-rose-deep" />
+                      </button>
+                    </div>
+
+                    <figcaption className="mt-4 text-center">
+                      <span className="block font-display text-lg font-bold text-rose-deep">
+                        {mem.caption}
+                      </span>
+                      <span className="font-accent block mt-0.5 text-base text-rose-deep/70 italic">
+                        {mem.note}
+                      </span>
+                    </figcaption>
+                  </div>
                 </div>
               </div>
-
-              {/* Photo Caption */}
-              <figcaption className="mt-5 text-center">
-                <span className="block font-display text-lg font-bold text-rose-deep">
-                  {mem.caption}
-                </span>
-                <span className="font-accent block mt-1 text-base text-rose-deep/70 italic">
-                  {mem.note}
-                </span>
-              </figcaption>
-            </figure>
-          ))}
+            );
+          })}
         </div>
       </section>
 
