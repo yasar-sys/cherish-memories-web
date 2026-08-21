@@ -434,7 +434,7 @@ function BirthdayPage() {
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 text-gold font-accent text-2xl italic mb-2">
               <BookOpen className="h-5 w-5 text-gold" />
-              <span>একুশটি অনুভূতির পাতা</span>
+              <span> অনুভূতির পাতা</span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl italic font-bold text-rose-deep">
               হৃদয়ের গভীরের কিছু কথা
@@ -616,7 +616,7 @@ function BirthdayPage() {
                   className="scrapbook-shadow group relative rounded-full bg-gradient-to-r from-rose-deep via-rose-mid to-rose-deep px-10 py-4 font-bold text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 min-w-[180px]"
                 >
                   <span className="flex items-center justify-center gap-2">
-                    হ্যাঁ, অবশ্যই! কিন্তু আজ এখানে চাপ দিলে error দেখাবে কারণ এক্সাম <Heart className="h-4 w-4 fill-primary-foreground" />
+                    এক্সাম <Heart className="h-4 w-4 fill-primary-foreground" />
                   </span>
                 </button>
 
